@@ -16,24 +16,15 @@ import { Amenity } from '../models';
       <div class="header">
         <button class="back-btn" (click)="goBack()">←</button>
         <div class="breadcrumb">
-          <span class="breadcrumb-item">DRA</span>
+          <span class="breadcrumb-item">Elephantine Enormous</span>
           <span class="separator">/</span>
           <span class="breadcrumb-item">Location</span>
           <span class="separator">/</span>
-          <span class="breadcrumb-item active">I Heart</span>
+          <span class="breadcrumb-item active">Elephantine Enormous</span>
         </div>
       </div>
 
-      <!-- Building Info -->
-      <div class="building-info">
-        <h3>Building Info</h3>
-        <div class="info-content">
-          <div>
-            <span class="label">Total Units:</span> {{ mainLocation.totalUnits }}
-          </div>
-          <div class="description">{{ mainLocation.description }}</div>
-        </div>
-      </div>
+     
 
       <!-- Building Image with Hotspots -->
       <div class="building-image-container">
@@ -56,6 +47,7 @@ import { Amenity } from '../models';
            <!-- Amenities List at Bottom -->
            <!-- Floating Amenities Button -->
           <button class="open-amenities-btn" *ngIf="!showAmenities" (click)="toggleShowAmenities()">Amenities</button>
+          <button class="open-gallery-btn" *ngIf="!showGallery" (click)="toggleShowGallery()">Gallery</button>
 
         <div class="amenities-footer" *ngIf="showAmenities">
           <div class="footer-header">
@@ -74,6 +66,19 @@ import { Amenity } from '../models';
             </button>
           </div>
         </div>
+
+        <div class="gallery-sidebar" *ngIf="showGallery">
+  <div class="gallery-header">
+    <h3>Gallery</h3>
+    <button class="toggle-btn" (click)="toggleShowGallery()">Hide</button>
+  </div>
+
+  <div class="gallery-images">
+    <img *ngFor="let img of galleryImages" [src]="img"
+         [class.selected]="img === selectedImage"
+         (click)="selectImage(img)" />
+  </div>
+</div>
       </div>
   `,
 
@@ -387,6 +392,63 @@ import { Amenity } from '../models';
     .heart {
       font-size: 1.5rem;
     }
+      .open-gallery-btn {
+  position: absolute;
+  bottom: 5rem;
+  right: 1rem;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.25rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.gallery-sidebar {
+  position: absolute;
+  top: 5rem;
+  right: 0;
+  width: 8rem;
+  height: calc(100% - 5rem);
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 1rem;
+  overflow-y: auto;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gallery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.gallery-header h3 {
+  color: #fff;
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.gallery-images img {
+  width: 100%;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform 0.2s, border 0.2s;
+}
+
+.gallery-images img:hover {
+  transform: scale(1.05);
+}
+
+.gallery-images img.selected {
+  border: 2px solid #3b82f6;
+}
+
       
   `]
 
@@ -395,12 +457,34 @@ import { Amenity } from '../models';
   //     height: 100%;
   //     object-fit: cover;
   //   }
+
+
+  //  <!-- Building Info -->
+  //     <div class="building-info">
+  //       <h3>Building Info</h3>
+  //       <div class="info-content">
+  //         <div>
+  //           <span class="label">Total Units:</span> {{ mainLocation.totalUnits }}
+  //         </div>
+  //         <div class="description">{{ mainLocation.description }}</div>
+  //       </div>
+  //     </div>
 })
 export class BuildingComponent implements OnInit {
   mainLocation = MAIN_LOCATION;
   amenities = AMENITIES;
   buildingImage = BUILDING_IMAGE;
   showAmenities = false; 
+   showGallery = false;
+
+    // Gallery properties
+  galleryImages = [
+    '/assets/images/eno-ent.jpeg',
+    '/assets/images/eno-enterance.jpeg',
+    '/assets/images/front-apprtment.jpeg',
+    '/assets/images/playground.png'
+  ];
+  selectedImage = this.galleryImages[0];
 
   // showAmenities = true;
 
@@ -411,9 +495,17 @@ export class BuildingComponent implements OnInit {
   toggleShowAmenities(): void {
     this.showAmenities = !this.showAmenities;
   }
+   toggleShowGallery(): void {
+    this.showGallery = !this.showGallery;
+  }
 
   selectAmenity(amenity: Amenity): void {
     this.router.navigate(['/amenity', amenity.id]);
+  }
+  
+  selectImage(img: string): void {
+    // this.selectedImage = img;
+    this.router.navigate(['/gallery-image'], { queryParams: { img } });
   }
 
   goBack(): void {

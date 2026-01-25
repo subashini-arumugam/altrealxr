@@ -19,7 +19,7 @@ import { GoogleMapsService } from '../services/google-maps.service';
       <div class="header">
         <button class="back-btn" (click)="goBack()">←</button>
         <div class="breadcrumb">
-          <span class="breadcrumb-item">ALT Real</span>
+          <span class="breadcrumb-item">Elephantine Enormous</span>
           <span class="separator">/</span>
           <span class="breadcrumb-item active">Location</span>
         </div>
@@ -28,7 +28,7 @@ import { GoogleMapsService } from '../services/google-maps.service';
       <!-- Map -->
       <app-google-map
         [initialCenter]="{ lat: mainLocation.latitude, lng: mainLocation.longitude }"
-        [initialZoom]="15"
+        [initialZoom]="13"
         (mapReady)="onMapReady($event)"
       ></app-google-map>
 
@@ -71,7 +71,7 @@ import { GoogleMapsService } from '../services/google-maps.service';
       </div>
 
       <!-- Locations List -->
-      <div class="locations-list">
+      <div class="locations-list" *ngIf="filteredLocations.length > 0">
         <h3 class="list-title">NEARBY LOCATIONS</h3>
         <div class="locations-scroll">
           <button *ngIf="filteredLocations.length === 0" class="no-locations">
@@ -93,8 +93,10 @@ import { GoogleMapsService } from '../services/google-maps.service';
       <!-- I HEART Button -->
       <div class="iheart-button">
         <button class="btn-iheart" (click)="navigateToBuilding()">
-          <span class="heart">💗</span>
-          <span class="text">ALT Real</span>
+            <span class="elepha">
+      <img src="assets/images/organic.gif" alt="Elephantine" />
+    </span>
+          <span class="text">Elephantine Enormous</span>
         </button>
       </div>
     </div>
@@ -361,6 +363,12 @@ import { GoogleMapsService } from '../services/google-maps.service';
   overflow: hidden;
   display: inline-block;
 }
+  .elepha img {
+  width: 28px;     /* adjust size */
+  height: 28px;
+  object-fit: contain;
+}
+
 
   `]
 })
@@ -382,7 +390,8 @@ export class LocationComponent implements OnInit {
     private googleMapsService: GoogleMapsService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   // onMapReady(map: google.maps.Map): void {
   //   this.map = map;
@@ -399,32 +408,37 @@ export class LocationComponent implements OnInit {
 
 async onMapReady(map: any) {
   this.map = map;
-
+this.googleMapsService.setMap(map);
   // Main location marker
   await this.googleMapsService.createMainLocationMarker(
     MAIN_LOCATION.latitude,
     MAIN_LOCATION.longitude,
-    MAIN_LOCATION.name
+    MAIN_LOCATION.name,
+    MAIN_LOCATION.icon
   );
 
   // LANDING PAGE BUBBLE MARKERS (big circular titles)
-  NEARBY_LOCATIONS.forEach(loc => {
-    this.googleMapsService.createTitleBubbleMarker(
-      loc.latitude,
-      loc.longitude,
-      loc.name
-    );
-  });
+  // NEARBY_LOCATIONS.forEach(loc => {
+  //   debugger
+  //   this.googleMapsService.createTitleBubbleMarker(
+  //     loc.latitude,
+  //     loc.longitude,
+  //     loc.name,
+  //     loc.icon ?? ''
+  //   );
+  // });
 
   // Small category markers (like before)
   NEARBY_LOCATIONS.forEach(async loc => {
     const marker = await this.googleMapsService.createMarker(
       { lat: loc.latitude, lng: loc.longitude },
       loc.name,
-      this.locationService.getCategoryColor(loc.category)
+      this.locationService.getCategoryColor(loc.category),
+      loc.icon ?? ''
     );
 
     marker.on('click', () => this.handleLocationClick(loc));
+  //  await this.googleMapsService.createTitleBubbleMarker(loc.latitude+0.001, loc.longitude+0.001, loc.name, loc.icon || '');
   });
 }
 
@@ -488,6 +502,11 @@ await this.googleMapsService.drawRoute(
     } else {
       this.selectedFilters.push(categoryName);
     }
+     this.filteredLocations =
+      this.locationService.filterLocationsByCategories(
+        NEARBY_LOCATIONS,
+        this.selectedFilters
+      );
     this.updateFilteredLocations();
   }
 
@@ -525,7 +544,7 @@ await this.googleMapsService.drawRoute(
     this.updateMapMarkers();
   }
 
-  private updateMapMarkers(): void {
+  private async updateMapMarkers(): Promise<void> {
     // Clear previous markers (except main location)
     this.filteredLocations.forEach(location => {
       new google.maps.Marker({
@@ -547,36 +566,67 @@ await this.googleMapsService.drawRoute(
     });
   }
 
-  selectLocation(location: Location): void {
-    this.selectedLocation = location;
-    this.distance = null;
+  async selectLocation(location: Location) {
+  this.selectedLocation = location;
 
-    const service = new google.maps.DirectionsService();
-    service.route(
-      {
-        origin: {
-          lat: this.mainLocation.latitude,
-          lng: this.mainLocation.longitude
-        },
-        destination: {
-          lat: location.latitude,
-          lng: location.longitude
-        },
-        travelMode: google.maps.TravelMode.DRIVING
-      },
-      (result, status) => {
-        if (status === google.maps.DirectionsStatus.OK && result) {
-          this.directionsRenderer.setDirections(result);
-          this.distance = this.locationService.calculateDistance(
-            this.mainLocation.latitude,
-            this.mainLocation.longitude,
-            location.latitude,
-            location.longitude
-          );
-        }
-      }
-    );
-  }
+  await this.googleMapsService.drawRoute(
+    { lat: MAIN_LOCATION.latitude, lng: MAIN_LOCATION.longitude },
+    { lat: location.latitude, lng: location.longitude }
+  );
+
+  this.distance = this.locationService.calculateDistance(
+    MAIN_LOCATION.latitude,
+    MAIN_LOCATION.longitude,
+    location.latitude,
+    location.longitude
+  );
+   // Show popup at location with name + distance
+  const popupHtml = `
+    <div style="font-size:14px;font-weight:bold;">${location.name}</div>
+    <div>${location.category}</div>
+    <div style="margin-top:6px;color:#ff005e;font-weight:bold;">
+      Distance: ${this.distance.toFixed(2)} km
+    </div>
+  `;
+
+  await this.googleMapsService.openPopup(
+    location.latitude,
+    location.longitude,
+    popupHtml
+  );
+}
+
+  // selectLocation(location: Location): void {
+
+  //   this.selectedLocation = location;
+  //   this.distance = null;
+
+  //   const service = new google.maps.DirectionsService();
+  //   service.route(
+  //     {
+  //       origin: {
+  //         lat: this.mainLocation.latitude,
+  //         lng: this.mainLocation.longitude
+  //       },
+  //       destination: {
+  //         lat: location.latitude,
+  //         lng: location.longitude
+  //       },
+  //       travelMode: google.maps.TravelMode.DRIVING
+  //     },
+  //     (result, status) => {
+  //       if (status === google.maps.DirectionsStatus.OK && result) {
+  //         this.directionsRenderer.setDirections(result);
+  //         this.distance = this.locationService.calculateDistance(
+  //           this.mainLocation.latitude,
+  //           this.mainLocation.longitude,
+  //           location.latitude,
+  //           location.longitude
+  //         );
+  //       }
+  //     }
+  //   );
+  // }
 
   goBack(): void {
     this.router.navigate(['/']);

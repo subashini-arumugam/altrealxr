@@ -2,128 +2,167 @@ import { Location, Amenity, FilterCategory } from '../models';
 
 export const MAIN_LOCATION: Location = {
   id: 'main',
-  name: 'DRA Homes - Velachery',
-  address: 'No. 254, Velachery Main Road, Thanthai Periyar Nagar, Pallikaranai, Kaivelli',
-  latitude: 12.96326,
-  longitude: 80.21574,
+  name: 'Elephantine Enormous',
+  address: 'Kannapuram, Kolathur, Mambakkam, Tamil Nadu 600127',
+  latitude: 12.81396,
+  longitude: 80.16782,
   totalUnits: 271,
-  description: 'Old Mamallapuram Rd, opp. Sipcot II Park, Sriuseri, Chennai, Tamil Nadu 603 103'
+  description: 'Old Mamallapuram Rd, opp. Sipcot II Park, Sriuseri, Chennai, Tamil Nadu 603 103',
+  icon:'/assets/images/elephantelogo.jpeg'
 };
+
 
 export const NEARBY_LOCATIONS: Location[] = [
   // Health
   {
     id: 'health-1',
-    name: 'Kamachi Hospital',
+    name: 'VITC Health Centre',
     category: 'Health',
-    latitude: 12.94963,
-    longitude: 80.20917,
-    icon: '🏥',
+    latitude: 12.84174,
+    longitude: 80.15657,
+    icon: '/assets/images/health.jpeg',
     address: 'Nearby Hospital'
   },
   {
     id: 'health-2',
-    name: 'Sarawathi Hospital',
+    name: 'Chettinad Hospital And Research Institute',
     category: 'Health',
-    latitude: 12.96590,
-    longitude: 80.20668,
-    icon: '🏥',
+    latitude: 12.79873,
+    longitude: 80.21960,
+    icon: '/assets/images/health.jpeg',
+    address: 'Nearby Hospital'
+  },
+  {
+    id: 'health-3',
+    name: 'Global Hospitals & Health City',
+    category: 'Health',
+    latitude: 12.89808,
+    longitude: 80.20569,
+    icon: '/assets/images/health.jpeg',
     address: 'Nearby Hospital'
   },
   // Education
   {
     id: 'edu-1',
-    name: 'Sri Ramakrishna School',
+    name: 'Velammal Global School Polachery Velammal Vidhyashram Mambakkam',
     category: 'Education',
-    latitude: 13.04349,
-    longitude: 80.26464,
-    icon: '🎓',
+    latitude: 13.82826,
+    longitude: 80.16625,
+    icon: '/assets/images/education.jpeg',
     address: 'Educational Institution'
   },
   {
     id: 'edu-2',
-    name: 'Anna University',
+    name: 'SBIOA International School',
     category: 'Education',
-    latitude: 13.01243,
-    longitude: 80.23677,
-    icon: '🎓',
+    latitude: 13.83753,
+    longitude: 80.17525,
+    icon: '/assets/images/education.jpeg',
+    address: 'Educational Institution'
+  },
+   {
+    id: 'edu-2',
+    name: 'TATVA School',
+    category: 'Education',
+    latitude: 13.84289,
+    longitude: 80.17838,
+    icon: '/assets/images/education.jpeg',
     address: 'Educational Institution'
   },
   // Entertainment
   {
     id: 'ent-1',
-    name: 'Viraa Mall',
+    name: 'VANDALUR zoo',
     category: 'Entertainment',
-    latitude: 12.85051,
-    longitude: 80.22620,
-    icon: '🎬',
+    latitude: 12.87954,
+    longitude: 80.08191,
+    icon: '/assets/images/entertainment.jpeg',
     address: 'Shopping Mall'
   },
   {
     id: 'ent-2',
-    name: 'Marina Mall',
+    name: 'MGM Dizzee World',
     category: 'Entertainment',
-    latitude: 12.83590,
-    longitude: 80.22886,
-    icon: '🎬',
+    latitude: 12.82932,
+    longitude: 80.23991,
+    icon: '/assets/images/entertainment.jpeg',
+    address: 'Shopping Mall'
+  },
+   {
+    id: 'ent-2',
+    name: 'Thaiyur mini waterfall',
+    category: 'Entertainment',
+    latitude: 12.78099,
+    longitude: 80.18887,
+    icon: '/assets/images/entertainment.jpeg',
     address: 'Shopping Mall'
   },
   // Landmarks
   {
     id: 'land-1',
-    name: 'Thalambur Junction',
+    name: 'Sipcot siruseri',
     category: 'Landmarks',
-    latitude: 12.84707,
-    longitude: 80.19988,
-    icon: '🏛️',
+    latitude: 12.83399,
+    longitude: 80.22861,
+    icon: '/assets/images/workspace.jpeg',
     address: 'Landmark'
   },
   {
     id: 'land-2',
-    name: 'SIPCOT ARCH',
+    name: 'ETA TECHNO PARK',
     category: 'Landmarks',
-    latitude: 12.95443,
-    longitude: 80.91504,
-    icon: '🏛️',
+    latitude: 12.85158,
+    longitude: 80.22257,
+    icon: '/assets/images/workspace.jpeg',
     address: 'Landmark'
   },
+  {
+    id: 'land-2',
+    name: '  Elcot Sez',
+    category: 'Landmarks',
+    latitude: 12.90678,
+    longitude: 80.22388,
+    icon: '/assets/images/workspace.jpeg',
+    address: 'Landmark'
+  },
+
   // Transportation
-  {
-    id: 'trans-1',
-    name: 'ST.Mount Metro Station',
-    category: 'Transportation',
-    latitude: 13.00195,
-    longitude: 80.19893,
-    icon: '🚇',
-    address: 'Metro Station'
-  },
-  {
-    id: 'trans-2',
-    name: 'Velachery Railway Station',
-    category: 'Transportation',
-    latitude: 12.96731,
-    longitude: 80.21930,
-    icon: '🚂',
-    address: 'Railway Station'
-  },
-  {
-    id: 'trans-3',
-    name: 'Airport',
-    category: 'Transportation',
-    latitude: 12.99509,
-    longitude: 80.2460,
-    icon: '✈️',
-    address: 'Airport'
-  },
-  {
-    id: 'trans-4',
-    name: ' ',
-    category: 'Transportation',
-    latitude: 12.91242,
-    longitude: 79.39805,
-    icon: '🛣️',
-    address: 'Highway'
-  }
+  // {
+  //   id: 'trans-1',
+  //   name: 'ST.Mount Metro Station',
+  //   category: 'Transportation',
+  //   latitude: 13.00195,
+  //   longitude: 80.19893,
+  //   icon: '🚇',
+  //   address: 'Metro Station'
+  // },
+  // {
+  //   id: 'trans-2',
+  //   name: 'Velachery Railway Station',
+  //   category: 'Transportation',
+  //   latitude: 12.96731,
+  //   longitude: 80.21930,
+  //   icon: '🚂',
+  //   address: 'Railway Station'
+  // },
+  // {
+  //   id: 'trans-3',
+  //   name: 'Airport',
+  //   category: 'Transportation',
+  //   latitude: 12.99509,
+  //   longitude: 80.2460,
+  //   icon: '✈️',
+  //   address: 'Airport'
+  // },
+  // {
+  //   id: 'trans-4',
+  //   name: ' ',
+  //   category: 'Transportation',
+  //   latitude: 12.91242,
+  //   longitude: 79.39805,
+  //   icon: '🛣️',
+  //   address: 'Highway'
+  // }
 ];
 
 export const AMENITIES: Amenity[] = [
@@ -131,16 +170,16 @@ export const AMENITIES: Amenity[] = [
     id: 'amenity-1',
     name: 'Entrance',
     icon: '🏠',
-    position: { x: 65, y: 89.5 },
-    description: 'Professional basketball court with proper lighting',
+    position: { x: 50, y: 60 },
+     description: 'A beautiful entrance to the property. This is the grand entrance with well-lit gates, welcoming visitors with a lush garden on both sides.',
     image360: '/assets/images/eno-ent.jpeg'
   },
   {
     id: 'amenity-2',
     name: 'Park',
     icon: '🎾',
-    position: { x: 10, y: 60 },
-    description: 'Dedicated pickle ball court',
+    position: { x: 13, y: 22},
+    description: 'The park entrance features a wide pathway lined with flowering plants, a decorative arch, and benches for visitors to relax before entering',
     image360: '/assets/images/eno-park.jpeg'
   },
   // {
@@ -247,5 +286,7 @@ export const TRANSPORTATION_CATEGORIES: FilterCategory[] = [
   { id: 'highway', name: 'Highway', icon: '🛣️' }
 ];
 
-export const BUILDING_IMAGE = 'assets/images/eno-enterance.jpeg';
+export const BUILDING_IMAGE = 'assets/images/main.jpeg';
+
+
 
