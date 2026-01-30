@@ -6,6 +6,8 @@ import { HomeComponent } from './pages/home.component';
 import { LocationComponent } from './pages/location.component';
 import { BuildingComponent } from './pages/building.component';
 import { AmenityViewerComponent } from './pages/amenity-viewer.component';
+import { GalleryImageComponent } from './pages/galleryimage.component';
+import { SlideLeaf } from './pages/slide-leaf/slide-leaf';
 
 // export const routes: Routes = [];
 // export const routes: Routes = [
@@ -15,8 +17,11 @@ import { AmenityViewerComponent } from './pages/amenity-viewer.component';
 //   { path: '', redirectTo: 'map', pathMatch: 'full' },
 // ];
 export const routes: Routes = [
+   {path: '',
+    component:SlideLeaf
+  },
   {
-    path: '',
+    path: 'ongoinf',
     component: HomeComponent
   },
   {
@@ -30,6 +35,10 @@ export const routes: Routes = [
   {
     path: 'amenity/:amenityId',
     component: AmenityViewerComponent
+  },
+  {
+   path: 'gallery-image',
+   component: GalleryImageComponent 
   },
   {
     path: '**',

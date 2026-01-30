@@ -1,0 +1,119 @@
+<!-- <div class="scene" (mousemove)="onMouseMove($event)" (mouseleave)="resetLeaf()">
+      <div class="header">
+        <div class="header-left">
+          <div class="logo">Elephantine Enormous</div>
+          <span class="separator">/</span>
+          <span class="city">Chennai</span>
+        </div>
+      </div>
+      <div class="popup-overlay">
+        <div class="popup-modal">
+          
+          <div class="popup-header">
+            <h2 class="popup-title">ELEPHANTINE</h2>
+          </div>
+
+          <div class="popup-content">
+            <h3 class="popup-heading">Welcome to Elephantine Mambakkam</h3>
+            
+            <p class="popup-description">
+              Discover Elephantine Enormous, an integrated residential community in Mambakkam, 
+              Chennai. Experience modern living with world-class amenities, lush green spaces, 
+              and sustainable architecture designed for your comfort and convenience.
+            </p>
+
+            <div class="popup-social">
+              <a href="https://www.linkedin.com/company/elephantine-enterprises/?originalSubdomain=in" target="_blank" class="social-icon">🔗</a>
+              <a href="https://www.instagram.com/elephantineenterprises/?hl=en" target="_blank" class="social-icon">📷</a>
+              <a href="https://www.youtube.com/@elephantineenterprises" target="_blank" class="social-icon">🎬</a>
+              <a href="#" class="social-icon">✉️</a>
+            </div>
+          </div>
+        </div>
+      </div>
+  <div class="background"></div>
+  <img class="leaf leaf1" src="assets/images/leaf.png" [style.transform]="hoverTransform">
+  <img class="leaf leaf2" src="assets/images/leaf.png" [style.transform]="hoverTransform">
+  <img class="leaf leaf3" src="assets/images/leaf.png" [style.transform]="hoverTransform">
+  <img class="leaf leaf4" src="assets/images/leaf.png" [style.transform]="hoverTransform">
+  <img class="leaf leaf5" src="assets/images/leaf.png" [style.transform]="hoverTransform">
+      <div class="bottom-button">
+  <button class="cta-btn" (click)="navigateToLocation()">
+    <span>ELEPHANTINE ENORMOUS</span>
+  </button>
+</div>
+</div> -->
+
+<div class="scene"
+     (mousemove)="onMouseMove($event)"
+     (mouseleave)="resetParallax()">
+
+  <div class="bg"
+       [style.transform]="bgTransform"></div>
+
+
+   <!-- <div class="birds">
+  <img class="bird bird1" src="assets/images/bird.png">
+  <img class="bird bird2" src="assets/images/bird.png">
+  </div> -->
+ <div class="birds">
+  <div class="bird bird1"></div>
+  <div class="bird bird2"></div>
+  <div class="bird bird3"></div>
+  <div class="bird bird4"></div>
+  <div class="bird bird5"></div>
+</div>
+
+
+
+
+  <!-- <img class="butterfly b1" src="assets/images/butterfly.png">
+  <img class="butterfly b2" src="assets/images/butterfly.png"> -->
+
+
+  <div class="rain">
+    <span *ngFor="let drop of rainDrops"></span>
+  </div>
+
+<img class="leaf leaf1" src="assets/images/leaf.png" [style.transform]="hoverTransform">
+  <img class="leaf leaf2" src="assets/images/leaf.png" [style.transform]="hoverTransform">
+  <img class="leaf leaf3" src="assets/images/leaf.png" [style.transform]="hoverTransform">
+  <img class="leaf leaf4" src="assets/images/leaf.png" [style.transform]="hoverTransform">
+  <img class="leaf leaf5" src="assets/images/leaf.png" [style.transform]="hoverTransform">
+  <!-- <div class="title">
+    RETURN <br> TO NATURE
+  </div> -->
+      <div class="popup-overlay">
+        <div class="popup-modal">
+          
+          <div class="popup-header">
+            <h2 class="popup-title">ELEPHANTINE</h2>
+          </div>
+
+          <div class="popup-content">
+            <h3 class="popup-heading">Welcome to Elephantine Mambakkam</h3>
+            
+            <p class="popup-description">
+              Discover Elephantine Enormous, an integrated residential community in Mambakkam, 
+              Chennai. Experience modern living with world-class amenities, lush green spaces, 
+              and sustainable architecture designed for your comfort and convenience.
+            </p>
+
+            <div class="popup-social">
+              <a href="https://www.linkedin.com/company/elephantine-enterprises/?originalSubdomain=in" target="_blank" class="social-icon">🔗</a>
+              <a href="https://www.instagram.com/elephantineenterprises/?hl=en" target="_blank" class="social-icon">📷</a>
+              <a href="https://www.youtube.com/@elephantineenterprises" target="_blank" class="social-icon">🎬</a>
+              <a href="#" class="social-icon">✉️</a>
+            </div>
+          </div>
+        </div>
+      </div>
+   <div class="bottom-button">
+  <button class="cta-btn" (click)="navigateToLocation()">
+    <!-- <img src="assets/images/organic.gif" class="btn-gif" alt="organic"> -->
+    <span>ELEPHANTINE ENORMOUS</span>
+  </button>
+</div>
+
+</div>
+
