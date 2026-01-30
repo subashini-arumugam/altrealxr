@@ -1,589 +1,7 @@
-// import { Component, OnInit } from '@angular/core';
-// import { CommonModule } from '@angular/common';
-// import { Router } from '@angular/router';
-// import { GoogleMapComponent } from '../components/google-map.components';
-// import { MAIN_LOCATION } from '../constants/data';
-
-// @Component({
-//   selector: 'app-home',
-//   standalone: true,
-//   imports: [CommonModule, GoogleMapComponent],
-//   template: `
-//     <div class="home-container">
-
-//       <div class="header">
-//         <div class="header-left">
-//           <div class="logo">Elephantine Enormous</div>
-//           <span class="city">Chennai</span>
-//         </div>
-//       </div>
-
-//       <app-google-map
-//         [initialCenter]="{ lat: mainLocation.latitude, lng: mainLocation.longitude }"
-//         [initialZoom]="zoomLevel"
-//         (mapReady)="onMapReady($event)">
-//       </app-google-map>
-
-//       <div class="zoom-controls">
-//         <button class="zoom-btn" (click)="zoomIn()">+</button>
-//         <div class="zoom-level">{{ zoomLevel }}</div>
-//         <button class="zoom-btn" (click)="zoomOut()">−</button>
-//       </div>
-
-//     </div>
-//   `,
-//   styles: [`
-
-// .home-container {
-//   position: relative;
-//   width: 100%;
-//   height: 100vh;
-// }
-
-// .header {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   right: 0;
-//   z-index: 100;
-//   padding: 1rem;
-//   background: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
-//   display: flex;
-// }
-
-// .logo { color: #fff; font-size: 20px; font-weight: bold; }
-// .city { color: #aaa; margin-left: 10px; }
-
-// .zoom-controls {
-//   position: absolute;
-//   right: 1rem;
-//   bottom: 6rem;
-//   z-index: 1000;
-// }
-
-// .zoom-btn {
-//   width: 40px;
-//   height: 40px;
-//   margin-bottom: 6px;
-//   border: none;
-//   cursor: pointer;
-// }
-
-// .zoom-level {
-//   color: white;
-//   text-align: center;
-//   margin-bottom: 6px;
-// }
-
-// /* ============================= */
-// /* MAIN LOCATION MARKER STYLES */
-// /* ============================= */
-
-// .main-location-icon {
-//   background: none !important;
-//   border: none !important;
-// }
-
-// .main-location-wrapper {
-//   position: relative;
-//   width: 200px;
-//   height: 200px;
-// }
-
-// /* Pink pin */
-// .main-pin {
-//   position: absolute;
-//   bottom: 0;
-//   left: 50%;
-//   transform: translateX(-50%);
-//   width: 26px;
-//   height: 26px;
-//   background: #ff005e;
-//   border: 3px solid #fff;
-//   border-radius: 50%;
-//   box-shadow: 0 0 8px rgba(0,0,0,.5);
-// }
-
-// /* dotted line */
-// .pin-line {
-//   position: absolute;
-//   bottom: 26px;
-//   left: 50%;
-//   transform: translateX(-50%);
-//   height: 70px;
-//   border-left: 2px dotted white;
-// }
-
-// /* bubble button */
-// .pin-bubble {
-//   position: absolute;
-//   bottom: 100px;
-//   left: 50%;
-//   transform: translateX(-50%);
-//   background: white;
-//   color: black;
-//   padding: 8px 14px;
-//   border-radius: 20px;
-//   font-weight: 600;
-//   font-size: 13px;
-//   white-space: nowrap;
-//   box-shadow: 0 4px 6px rgba(0,0,0,.4);
-//   cursor: pointer;
-// }
-
-// .pin-bubble:hover {
-//   background: #f0f0f0;
-// }
-
-//   `]
-// })
-// export class HomeComponent implements OnInit {
-
-//   mainLocation = MAIN_LOCATION;
-//   zoomLevel = 13;
-//   map!: L.Map;
-//   mainMarker!: L.Marker;
-
-//   constructor(private router: Router) {}
-
-//   ngOnInit(): void {}
-
-//   onMapReady(map: L.Map): void {
-//     this.map = map;
-//     this.addMainLocationMarker();
-//   }
-
-//   async addMainLocationMarker() {
-//     const L = await import('leaflet');
-
-//     const html = `
-//       <div class="main-location-wrapper">
-//         <div class="main-pin"></div>
-//         <div class="pin-line"></div>
-//         <div class="pin-bubble" onclick="window.location.href='/location'">
-//           Elephantine Enormous
-//         </div>
-//       </div>
-//     `;
-
-//     const icon = L.divIcon({
-//       className: 'main-location-icon',
-//       html,
-//       iconSize: [200, 200],
-//       iconAnchor: [100, 180]
-//     });
-
-//     this.mainMarker = L.marker(
-//       [this.mainLocation.latitude, this.mainLocation.longitude],
-//       { icon }
-//     ).addTo(this.map);
-//   }
-
-//   zoomIn() {
-//     this.zoomLevel++;
-//     this.map.setZoom(this.zoomLevel);
-//   }
-
-//   zoomOut() {
-//     this.zoomLevel--;
-//     this.map.setZoom(this.zoomLevel);
-//   }
-
-// }
-
-
-
-
-// // import { Component, OnInit } from '@angular/core';
-// // import { CommonModule } from '@angular/common';
-// // import { Router } from '@angular/router';
-// // import { GoogleMapComponent } from '../components/google-map.components';
-// // import { MAIN_LOCATION } from '../constants/data';
-// // // import * as L from 'leaflet';
-// // import { isPlatformBrowser } from '@angular/common';
-// // import { Inject, PLATFORM_ID } from '@angular/core';
-// // // import { GoogleMapComponent } from '../components/google-map.component';
-// // // import { MAIN_LOCATION } from '../constants/data';
-
-// // @Component({
-// //   selector: 'app-home',
-// //   standalone: true,
-// //   imports: [CommonModule, GoogleMapComponent],
-// //   template: `
-// //     <div class="home-container">
-// //       <!-- Header -->
-   
-// //       <div class="header">
-// //         <div class="header-left">
-// //           <div class="logo">Elephantine Enormous</div>
-// //           <span class="city">Chennai</span>
-// //         </div>
-// //       </div>
-
-// //       <!-- Map Container -->
-// //       <app-google-map
-// //         [initialCenter]="{ lat: mainLocation.latitude, lng: mainLocation.longitude }"
-// //         [initialZoom]="zoomLevel"
-// //         (mapReady)="onMapReady($event)"
-// //       ></app-google-map>
-
-// //       <!-- Zoom Controls -->
-// //       <div class="zoom-controls">
-// //         <button class="zoom-btn" (click)="zoomIn()">+</button>
-// //         <div class="zoom-level">{{ zoomLevel }}</div>
-// //         <button class="zoom-btn" (click)="zoomOut()">−</button>
-// //       </div>
-
-// //       <!-- I HEART Button -->
-// // <div class="iheart-button">
-// //         <button class="btn-iheart" (click)="navigateToLocation()">
-// //           <span class="text">Elephantine Enormous</span>
-// //         </button>
-// // </div>
-// // <div class="cloud-layer cloud-top"></div>
-// //     </div>
-// //   `,
-// //   // <div class="header-right">
-// //   //         <button class="nav-btn">Menu</button>
-// //   //         <button class="nav-btn">Login</button>
-// //   //       </div>
-// //   styles: [`
-// //     .home-container {
-// //       position: relative;
-// //       width: 100%;
-// //       height: 100vh;
-// //       background-color: #000;
-// //       overflow: hidden;
-// //     }
-// //    .map-container { z-index: 1; }
-// //     .header {
-// //       position: absolute;
-// //       top: 0;
-// //       left: 0;
-// //       right: 0;
-// //       z-index: 100;
-// //       background: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-// //       padding: 1rem;
-// //       display: flex;
-// //       justify-content: space-between;
-// //       align-items: center;
-// //     }
-
-// //     .header-left {
-// //       display: flex;
-// //       align-items: center;
-// //       gap: 0.5rem;
-// //     }
-
-// //     .logo {
-// //       font-size: 1.5rem;
-// //       font-weight: bold;
-// //       color: #fff;
-// //     }
-
-// //     .city {
-// //       font-size: 0.875rem;
-// //       color: #999;
-// //     }
-
-// //     .header-right {
-// //       display: flex;
-// //       gap: 1rem;
-// //     }
-
-// //     .nav-btn {
-// //       padding: 0.5rem 1rem;
-// //       font-size: 0.875rem;
-// //       color: #999;
-// //       background: none;
-// //       border: none;
-// //       cursor: pointer;
-// //       transition: color 0.3s;
-// //     }
-
-// //     .nav-btn:hover {
-// //       color: #fff;
-// //     }
-
-// //     .zoom-controls {
-// //       position: absolute;
-// //       bottom: 8rem;
-// //       right: 1rem;
-// //       z-index: 1000;
-// //       display: flex;
-// //       flex-direction: column;
-// //       gap: 0.5rem;
-// //     }
-
-// //     .zoom-btn {
-// //       width: 2.5rem;
-// //       height: 2.5rem;
-// //       padding: 0;
-// //       background-color: #fff;
-// //       border: none;
-// //       border-radius: 0.25rem;
-// //       color: #000;
-// //       font-size: 1.25rem;
-// //       cursor: pointer;
-// //       display: flex;
-// //       align-items: center;
-// //       justify-content: center;
-// //       transition: background-color 0.2s;
-// //     }
-
-// //     .zoom-btn:hover {
-// //       background-color: #f0f0f0;
-// //     }
-
-// //     .zoom-level {
-// //       text-align: center;
-// //       color: #fff;
-// //       font-size: 0.75rem;
-// //       background-color: rgba(0, 0, 0, 0.5);
-// //       padding: 0.25rem 0.5rem;
-// //       border-radius: 0.25rem;
-// //     }
-
-// //     .iheart-button {
-// //       position: absolute;
-// //       bottom: 2rem;
-// //       left: 50%;
-// //       transform: translateX(-50%);
-// //       z-index: 20;
-// //     }
-
-// //     .btn-iheart {
-// //       background-color: #fff;
-// //       color: #000;
-// //       padding: 1rem 2rem;
-// //       border: none;
-// //       border-radius: 2rem;
-// //       font-size: 1rem;
-// //       font-weight: 600;
-// //       cursor: pointer;
-// //       display: flex;
-// //       align-items: center;
-// //       gap: 0.5rem;
-// //       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-// //       transition: background-color 0.2s;
-// //     }
-
-// //     .btn-iheart:hover {
-// //       background-color: #f0f0f0;
-// //     }
-
-// //     .heart {
-// //       font-size: 1.5rem;
-// //     }
- 
-// // /* Base style for all clouds */
-// // .cloud-layer {
-// //   position: absolute;
-// //   left: -200%; /* start far left */
-// //   width: 300%; /* long enough to loop */
-// //   height: 150px;
-// //   background-repeat: repeat-x;
-// //   background-size: contain;
-// //   pointer-events: none;
-// //   z-index: 500; /* above map but below header/buttons */
-// // }
-
-// // /* Top clouds */
-// // .cloud-top {
-// //   top: 2rem;
-// //   background-image: url('/assets/images/Dramatic-Fog-Cloud-Over-Mountain-Peaks-PNG.png');
-// //   opacity: 0.6;
-// //   animation: moveCloudsTop 120s linear infinite;
-// // }
-
-
-// // /* Animations */
-// // @keyframes moveCloudsTop {
-// //   0% { transform: translateX(0); }
-// //   100% { transform: translateX(100%); }
-// // }
-// // .main-location-icon {
-// //   background: none !important;
-// //   border: none !important;
-// // }
-
-// // .main-location-wrapper {
-// //   position: relative;
-// //   width: 200px;
-// //   height: 200px;
-// //   pointer-events: auto;
-// // }
-
-// // /* Circle Pin */
-// // .main-pin {
-// //   position: absolute;
-// //   bottom: 0;
-// //   left: 50%;
-// //   transform: translateX(-50%);
-// //   width: 26px;
-// //   height: 26px;
-// //   background: #ff005e;
-// //   border: 3px solid white;
-// //   border-radius: 50%;
-// //   box-shadow: 0 0 8px rgba(0,0,0,0.5);
-// //   z-index: 3;
-// // }
-
-// // /* Dotted Line */
-// // .pin-line {
-// //   position: absolute;
-// //   bottom: 26px;
-// //   left: 50%;
-// //   transform: translateX(-50%);
-// //   height: 60px;
-// //   border-left: 2px dotted white;
-// //   z-index: 2;
-// // }
-
-// // /* Bubble Button */
-// // .pin-bubble {
-// //   position: absolute;
-// //   bottom: 86px;
-// //   left: 50%;
-// //   transform: translateX(-50%);
-// //   background: white;
-// //   color: black;
-// //   padding: 8px 14px;
-// //   border-radius: 20px;
-// //   font-weight: 600;
-// //   font-size: 13px;
-// //   white-space: nowrap;
-// //   box-shadow: 0 4px 6px rgba(0,0,0,0.4);
-// //   z-index: 4;
-// //   cursor: pointer;
-// // }
-
-// // /* Optional hover */
-// // .pin-bubble:hover {
-// //   background: #f2f2f2;
-// // }
-
-// //     `]
-// // })
-// // // <div class="fog-layer fog-top"></div>
-// // //   <div class="fog-layer fog-bottom"></div>
-// // //      /* CLOUD BASE STYLE */
-// // // /* FOG BASE STYLE */
-// // // .fog-layer {
-// // //   position: absolute;
-// // //   left: 0;
-// // //   width: 300%;
-// // //   height: 250px;
-// // //   background-image: url('/assets/images/fog1.png'); /* your fog texture */
-// // //   background-repeat: repeat-x;
-// // //   background-size: cover;
-// // //   opacity: 0.8; 
-// // //   animation: fogMove 40s linear infinite;
-// // //   pointer-events: none;
-// // //   z-index: 9999; 
-// // // }
-
-// // // /* TOP FOG POSITION */
-// // // .fog-top {
-// // //   top: 0;
-
-// // // }
-
-// // // /* BOTTOM FOG POSITION */
-// // // .fog-bottom {
-// // //   bottom: 0;
-
-// // // }
-
-// // // /* MOVEMENT ANIMATION */
-// // // @keyframes fogMove {
-// // //   0% { transform: translateX(-20%); }
-// // //   100% { transform: translateX(10%); }
-// // // }
-// // export class HomeComponent implements OnInit {
-// //   mainLocation = MAIN_LOCATION;
-// //   zoomLevel = 13;
-// //   // map!: google.maps.Map;
-// //   map!: L.Map;
-// //   mainMarker!: L.Marker;
-
-// //   constructor(private router: Router) {}
-
-// //   ngOnInit(): void {}
-
-// //   onMapReady(map: L.Map): void {
-// //   this.map = map;
-// //   this.addMainLocationMarker();
-// // }
-
-// // private async addMainLocationMarker(): Promise<void> {
-// //   if (!this.map) return;
-// //   const L = await import('leaflet');
-
-// //   const html = `
-// //     <div class="main-location-wrapper">
-      
-// //       <!-- Pin Circle -->
-// //       <div class="main-pin"></div>
-
-// //       <!-- Dotted line -->
-// //       <div class="pin-line"></div>
-
-// //       <!-- Button Bubble -->
-// //       <div class="pin-bubble">
-// //         Elephantine Enormous
-// //       </div>
-// //     </div>
-// //   `;
-
-// //   const icon = L.divIcon({
-// //     className: 'main-location-icon',
-// //     html,
-// //     iconSize: [200, 200],
-// //     iconAnchor: [100, 180] 
-// //   });
-
-// //   this.mainMarker = L.marker(
-// //     [this.mainLocation.latitude, this.mainLocation.longitude],
-// //     { icon }
-// //   ).addTo(this.map);
-// // }
-
-// // // private addMainLocationMarker(): void {
-// // //     if (!this.map) return;
-
-// // //     const L = require('leaflet');
-
-// // //     const marker = L.marker([this.mainLocation.latitude, this.mainLocation.longitude])
-// // //       .addTo(this.map)
-// // //       .bindPopup(`<div style="padding:0.5rem;"><strong>${this.mainLocation.name}</strong><br/>${this.mainLocation.address}</div>`)
-// // //       .openPopup();
-
-// // //     this.mainMarker = marker;
-// // //   }
-
-// //   zoomIn(): void {
-// //     if (this.zoomLevel < 20) {
-// //       this.zoomLevel++;
-// //       this.map.setZoom(this.zoomLevel);
-// //     }
-// //   }
-
-// //   zoomOut(): void {
-// //     if (this.zoomLevel > 1) {
-// //       this.zoomLevel--;
-// //       this.map.setZoom(this.zoomLevel);
-// //     }
-// //   }
-
-// //   navigateToLocation(): void {
-// //     this.router.navigate(['/location']);
-// //   }
-// // }
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { GoogleMapComponent } from '../components/google-map.components';
-import { MAIN_LOCATION, NEARBY_LOCATIONS } from '../constants/data';
+import { MAIN_LOCATION, NEARBY_LOCATIONS, ONGOINGPROJECT_LOCATIONS } from '../constants/data';
 // import * as L from 'leaflet';
 import { Router } from '@angular/router';
 
@@ -624,8 +42,7 @@ import { Router } from '@angular/router';
           <span class="text">Elephantine Enormous</span>
         </button>
       </div>
-     
-      <!-- Fixed Popup Modal -->
+       <!-- Fixed Popup Modal -->
       <div class="popup-overlay">
         <div class="popup-modal">
           
@@ -651,6 +68,8 @@ import { Router } from '@angular/router';
           </div>
         </div>
       </div>
+   <div class="cloud-layer cloud-top"></div>
+     
 
       <!-- Cloud Layer -->
      <div class="cloud-container">
@@ -661,6 +80,32 @@ import { Router } from '@angular/router';
 
     </div>
   `,
+  //  <!-- Fixed Popup Modal -->
+  //     <div class="popup-overlay">
+  //       <div class="popup-modal">
+          
+  //         <div class="popup-header">
+  //           <h2 class="popup-title">ELEPHANTINE</h2>
+  //         </div>
+
+  //         <div class="popup-content">
+  //           <h3 class="popup-heading">Welcome to Elephantine Mambakkam</h3>
+            
+  //           <p class="popup-description">
+  //             Discover Elephantine Enormous, an integrated residential community in Mambakkam, 
+  //             Chennai. Experience modern living with world-class amenities, lush green spaces, 
+  //             and sustainable architecture designed for your comfort and convenience.
+  //           </p>
+
+  //           <div class="popup-social">
+  //             <a href="https://www.linkedin.com/company/elephantine-enterprises/?originalSubdomain=in" target="_blank" class="social-icon">🔗</a>
+  //             <a href="https://www.instagram.com/elephantineenterprises/?hl=en" target="_blank" class="social-icon">📷</a>
+  //             <a href="https://www.youtube.com/@elephantineenterprises" target="_blank" class="social-icon">🎬</a>
+  //             <a href="#" class="social-icon">✉️</a>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
   //  <div class="cloud-layer cloud-top"></div>
   styles: [`
     .home-container {
@@ -939,6 +384,10 @@ import { Router } from '@angular/router';
   height: 28px;
   object-fit: contain;
 }
+  .ongoing-project-marker {
+  background: transparent;
+}
+
   `]
 })
   //  .cloud-layer {
@@ -966,7 +415,7 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   mainLocation = MAIN_LOCATION;
     nearbyLocations = NEARBY_LOCATIONS;
-  zoomLevel = 13;
+  zoomLevel = 10;
   // map!: L.Map;
     map: any;
   mainMarker: any;
@@ -976,7 +425,8 @@ export class HomeComponent implements OnInit {
   nearbyMarkers: any[] = [];
   // showPopup = true;
    private isBrowser: boolean;
-
+ongoingProjects = ONGOINGPROJECT_LOCATIONS;
+ongoingProjectMarkers: any[] = [];
 
 // constructor(private router: Router) {}
   constructor(@Inject(PLATFORM_ID) private platformId: Object,private router: Router) {
@@ -991,6 +441,7 @@ export class HomeComponent implements OnInit {
     this.map = map;
       // await this.addNearbyLocationMarkers();
     await this.addMainLocationMarker();
+    await this.addOngoingProjectMarkers();  
     // await this.addIHeartMarker();
     // await this.addLocationLabelButton();
     // await this.drawDottedLine();
@@ -1041,6 +492,58 @@ export class HomeComponent implements OnInit {
 
     this.mainMarker = marker;
   }
+
+  private async addOngoingProjectMarkers(): Promise<void> {
+  if (!this.map) return;
+
+  const L = await import('leaflet');
+
+  this.ongoingProjects.forEach(project => {
+
+    // Custom project icon
+    const projectIcon = L.divIcon({
+      className: 'ongoing-project-marker',
+      html: `
+        <div style="
+          width:34px;
+          height:34px;
+          background:#00b3ff;
+          border:3px solid #fff;
+          border-radius:50%;
+          box-shadow:0 0 10px rgba(0,0,0,0.4);
+          display:flex;
+          align-items:center;
+          justify-content:center;
+          font-size:14px;
+          color:white;
+          font-weight:bold;
+          iconUrl: 'assets/images/location-pin.png',
+        ">
+          P
+        </div>
+      `,
+      iconSize: [38,38],
+      iconAnchor: [19,38],
+      popupAnchor: [0, -38]
+    });
+
+    // Add marker
+    const marker = L.marker(
+      [project.latitude, project.longitude],
+      { icon: projectIcon }
+    ).addTo(this.map);
+
+    // Popup
+    marker.bindPopup(`
+      <div style="padding:6px;font-family:Arial;">
+        <strong style="color:#00b3ff;">${project.name}</strong><br/>
+        <span style="font-size:12px;">Ongoing Project</span>
+      </div>
+    `);
+
+    this.ongoingProjectMarkers.push(marker);
+  });
+}
 
   // private async addLocationLabelButton(): Promise<void> {
   //   if (!this.map) return;

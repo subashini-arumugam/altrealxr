@@ -1,0 +1,401 @@
+/* .scene {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+} */
+
+/* .background {
+  position: absolute;
+  inset: 0;
+  background: url('/assets/images/nature.png') no-repeat center center/cover;
+  filter: brightness(0.9);
+} */
+
+.title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 64px;
+  font-weight: bold;
+  color: white;
+  z-index: 5;
+  font-family: Arial, sans-serif;
+}
+
+.leaf {
+  position: absolute;
+  width: 60px;
+  opacity: 0.9;
+  z-index: 3;
+  transition: transform 0.2s ease-out;  
+  animation: float linear infinite;
+}
+.leaf1 { top: 10%; animation-duration: 18s; }
+.leaf2 { top: 30%; animation-duration: 22s; animation-delay: -5s; }
+.leaf3 { top: 50%; animation-duration: 20s; animation-delay: -10s; }
+.leaf4 { top: 70%; animation-duration: 26s; animation-delay: -3s; }
+.leaf5 { top: 85%; animation-duration: 24s; animation-delay: -8s; }
+
+@keyframes float {
+  0% {
+    transform: translateX(110vw) rotate(0deg);
+  }
+  100% {
+    transform: translateX(-200px) rotate(360deg);
+  }
+}
+    .header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    .city {
+      font-size: 0.875rem;
+      color: #999;
+    }
+    .separator {
+      color: #999;
+    }
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      animation: fadeIn 0.3s ease-in-out;
+      pointer-events: none;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .popup-modal {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 3rem 2.5rem;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      position: relative;
+      animation: slideUp 0.3s ease-out;
+      pointer-events: auto;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .popup-header {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+      padding-bottom: 1rem;
+    }
+
+    .popup-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #d4af37;
+      letter-spacing: 0.15em;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    .popup-content {
+      text-align: center;
+    }
+
+    .popup-heading {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #fff;
+      margin: 0 0 1rem 0;
+      letter-spacing: 0.05em;
+    }
+
+    .popup-description {
+      font-size: 0.9rem;
+      color: #ccc;
+      line-height: 1.6;
+      margin: 0 0 1.5rem 0;
+      text-align: justify;
+    }
+
+    .popup-social {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      background-color: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 50%;
+      color: #d4af37;
+      text-decoration: none;
+      font-size: 1.2rem;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .social-icon:hover {
+      background-color: rgba(212, 175, 55, 0.2);
+      border-color: #d4af37;
+      transform: translateY(-2px);
+    } 
+    /* Bottom button wrapper
+
+/* hills */
+.bottom-button {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 20;
+}
+
+/* Button style */
+.cta-btn {
+  background: rgba(0, 0, 0, 0.55);
+  border: 2px solid #fff;
+  color: #fff;
+  padding: 14px 36px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  border-radius: 40px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
+}
+
+/* Hover glow */
+.cta-btn:hover {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.08);
+  box-shadow: 0 0 20px rgba(255,255,255,0.6);
+}
+
+
+    .scene {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background: url('/assets/images/nat_sunset.png') no-repeat center/cover;
+  transition: transform 0.2s ease-out;
+}
+
+.title {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 64px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  z-index: 5;
+}
+
+ /* .bird {
+  position: absolute;
+  width: 80px;
+  animation: fly linear infinite;
+  animation: fly linear infinite, flap 0.3s ease-in-out infinite alternate;
+  transform-origin: center center;
+} */
+
+/* .bird1 { top: 20%; left: -100px; animation-duration: 20s; }
+.bird2 { top: 35%; left: -150px; animation-duration: 25s; animation-delay: 5s; } */
+/* Individual timings */
+/* .bird1 { top: 20%; left: -120px; animation-duration: 18s; }
+.bird2 { top: 35%; left: -160px; animation-duration: 22s; animation-delay: 4s; } */
+/* 
+.bird img {
+  width: 100%;
+  animation: flap 0.25s ease-in-out infinite alternate;
+  transform-origin: center center;
+} */
+
+/* @keyframes fly {
+  from { transform: translateX(-200px); }
+  to   { transform: translateX(120vw); }
+}
+
+@keyframes flap {
+  0%   { transform: rotate(-12deg); }
+  100% { transform: rotate(12deg); }
+} */
+
+/* @keyframes fly {
+  from { transform: translateX(-150px); }
+  to   { transform: translateX(120vw); }
+} */
+/* @keyframes flap {
+  0% { transform: rotate(-10deg); }
+  50% { transform: rotate(10deg); }
+  100% { transform: rotate(-10deg); }
+} */
+
+/* Container */
+.birds {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* Bird shape using CSS */
+.bird {
+  position: absolute;
+  width: 30px;
+  height: 20px;
+}
+
+/* Draw wings */
+.bird::before,
+.bird::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 6px;
+  border-top: 1px solid #281901;
+  border-radius: 50% 50% 0 0;
+  top: 5px;
+}
+/* Left wing */
+.bird::before {
+  left: 0;
+  transform-origin: right center;
+  animation: wing-left 0.4s ease-in-out infinite;
+}
+
+/* Right wing */
+.bird::after {
+  right: 0;
+  transform-origin: left center;
+  animation: wing-right 0.4s ease-in-out infinite;
+}
+
+/* Natural flight path */
+.bird {
+  animation: bird-fly linear infinite;
+}
+
+/* Individual birds */
+.bird1 { top: 20%; animation-duration: 18s; }
+.bird2 { top: 35%; animation-duration: 22s; animation-delay: 4s; }
+.bird3 { top: 15%; animation-duration: 20s; animation-delay: 8s; }
+.bird3 { top: 20%; animation-duration: 24s; animation-delay: 10s; }
+.bird3 { top: 25%; animation-duration: 26s; animation-delay: 12s; }
+
+/* Wing flapping */
+@keyframes wing-left {
+  0%   { transform: rotate(20deg); }
+  100% { transform: rotate(-20deg); }
+}
+
+@keyframes wing-right {
+  0%   { transform: rotate(-20deg); }
+  100% { transform: rotate(20deg); }
+}
+
+/* Curved natural flight */
+@keyframes bird-fly {
+  0%   { transform: translateX(-10vw) translateY(0) scale(0.8); opacity: 0; }
+  10%  { opacity: 1; }
+  25%  { transform: translateX(25vw) translateY(-20px) scale(1); }
+  50%  { transform: translateX(55vw) translateY(10px) scale(1.05); }
+  75%  { transform: translateX(85vw) translateY(-15px) scale(1); }
+  100% { transform: translateX(120vw) translateY(0) scale(0.9); opacity: 0; }
+}
+
+
+
+.butterfly {
+  position: absolute;
+  width: 60px;
+  animation: floaty 6s ease-in-out infinite;
+}
+
+.b1 { left: 20%; top: 60%; }
+.b2 { left: 70%; top: 50%; animation-delay: 2s; }
+
+@keyframes floaty {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-30px); }
+}
+
+.rain span {
+  position: absolute;
+  width: 2px;
+  height: 20px;
+  background: rgba(255,255,255,0.4);
+  top: -20px;
+  animation: rain 1s linear infinite;
+}
+
+.rain span:nth-child(n) {
+  left: calc(100% * random());
+}
+
+@keyframes rain {
+  to { transform: translateY(110vh); }
+}

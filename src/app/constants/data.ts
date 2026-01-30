@@ -164,6 +164,37 @@ export const NEARBY_LOCATIONS: Location[] = [
   //   address: 'Highway'
   // }
 ];
+//ongoing project 
+export const ONGOINGPROJECT_LOCATIONS: Location[] = [
+  {
+    id: 'heaven',
+    name: 'Haven',
+    category: 'project',
+    latitude:13.13178,
+    longitude: 80.12161,
+    icon: '/assets/images/location-icon.png',
+    address: 'ongoing project',
+  },
+  {
+    id: 'heri',
+    name: 'Heritage',
+    category: 'poject',
+    latitude: 12.98515,
+    longitude: 79.94815,
+    icon: '/assets/images/location-icon.png',
+    address: 'ongoing project'
+  },
+  {
+    id: 'bliss',
+    name: 'Bliss',
+    category: 'project',
+    latitude: 12.84291,
+    longitude: 80.17512,
+    icon:'/assets/images/location-icon.png',
+    address: 'Nearby Hospital'
+  }
+];
+
 
 export const AMENITIES: Amenity[] = [
   {
