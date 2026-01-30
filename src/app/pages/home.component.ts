@@ -276,7 +276,7 @@ import { Router } from '@angular/router';
     .popup-title {
       font-size: 2rem;
       font-weight: 700;
-      color: white;
+      color: #d4af37;
       letter-spacing: 0.15em;
       margin: 0;
       text-transform: uppercase;
