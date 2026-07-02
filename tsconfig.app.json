@@ -5,12 +5,14 @@
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "types": [
-      "node"
+      "node",
+       "google.maps"
     ]
   },
   "include": [
-    "src/**/*.ts"
-  ],
+    "src/**/*.ts",
+    "src/types/**/*.d.ts"
+, "src/app/poi.service,ts"  ],
   "exclude": [
     "src/**/*.spec.ts"
   ]
