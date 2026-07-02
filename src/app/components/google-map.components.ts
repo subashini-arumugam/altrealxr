@@ -62,7 +62,8 @@ export class GoogleMapComponent implements OnInit,AfterViewInit {
 
     // Add tile layer
     L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      maxZoom: 19
+      maxZoom: 19,
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, USDA, USGS'
     }).addTo(this.map);
   }
   // async ngAfterViewInit(): Promise<void> {

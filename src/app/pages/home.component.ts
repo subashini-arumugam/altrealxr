@@ -2,8 +2,8 @@ import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { GoogleMapComponent } from '../components/google-map.components';
 import { MAIN_LOCATION, NEARBY_LOCATIONS, ONGOINGPROJECT_LOCATIONS } from '../constants/data';
-// import * as L from 'leaflet';
 import { Router } from '@angular/router';
+import { GoogleMapsService } from '../services/google-maps.service';
 
 @Component({
   selector: 'app-home',
@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
   template: `
     <div class="home-container">
       <!-- Header -->
-      <div class="header">
+      <div class="header glassmorphism">
         <div class="header-left">
           <div class="logo">Elephantine Enormous</div>
           <span class="separator">/</span>
@@ -28,24 +28,25 @@ import { Router } from '@angular/router';
       ></app-google-map>
 
       <!-- Zoom Controls -->
-      <div class="zoom-controls">
+      <div class="zoom-controls glassmorphism">
         <button class="zoom-btn" (click)="zoomIn()">+</button>
         <div class="zoom-level">{{ zoomLevel }}</div>
         <button class="zoom-btn" (click)="zoomOut()">−</button>
       </div>
- <!-- I HEART Button -->
+
+      <!-- Footer CTA Button -->
       <div class="iheart-button">
         <button class="btn-iheart" (click)="navigateToLocation()">
-        <span class="elepha">
-      <img src="assets/images/organic.gif" alt="Elephantine" />
-    </span>
+          <span class="elepha">
+            <img src="assets/images/organic.gif" alt="Elephantine" />
+          </span>
           <span class="text">Elephantine Enormous</span>
         </button>
       </div>
-       <!-- Fixed Popup Modal -->
+
+      <!-- Fixed Popup Modal -->
       <div class="popup-overlay">
-        <div class="popup-modal">
-          
+        <div class="popup-modal glassmorphism">
           <div class="popup-header">
             <h2 class="popup-title">ELEPHANTINE</h2>
           </div>
@@ -68,55 +69,24 @@ import { Router } from '@angular/router';
           </div>
         </div>
       </div>
-   <div class="cloud-layer cloud-top"></div>
-     
 
-      <!-- Cloud Layer -->
-     <div class="cloud-container">
-  <div class="cloud cloud1"></div>
-  <div class="cloud cloud2"></div>
-  <div class="cloud cloud3"></div>
-</div>
-
+      <!-- Cloud/Fog Layers for Atmosphere -->
+      <div class="cloud-container">
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+      </div>
     </div>
   `,
-  //  <!-- Fixed Popup Modal -->
-  //     <div class="popup-overlay">
-  //       <div class="popup-modal">
-          
-  //         <div class="popup-header">
-  //           <h2 class="popup-title">ELEPHANTINE</h2>
-  //         </div>
-
-  //         <div class="popup-content">
-  //           <h3 class="popup-heading">Welcome to Elephantine Mambakkam</h3>
-            
-  //           <p class="popup-description">
-  //             Discover Elephantine Enormous, an integrated residential community in Mambakkam, 
-  //             Chennai. Experience modern living with world-class amenities, lush green spaces, 
-  //             and sustainable architecture designed for your comfort and convenience.
-  //           </p>
-
-  //           <div class="popup-social">
-  //             <a href="https://www.linkedin.com/company/elephantine-enterprises/?originalSubdomain=in" target="_blank" class="social-icon">🔗</a>
-  //             <a href="https://www.instagram.com/elephantineenterprises/?hl=en" target="_blank" class="social-icon">📷</a>
-  //             <a href="https://www.youtube.com/@elephantineenterprises" target="_blank" class="social-icon">🎬</a>
-  //             <a href="#" class="social-icon">✉️</a>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     </div>
-  //  <div class="cloud-layer cloud-top"></div>
   styles: [`
     .home-container {
       position: relative;
       width: 100%;
       height: 100vh;
-      background-color: #000;
+      background-color: #0d0c0b;
       overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
-
-    .map-container { z-index: 1; }
 
     .header {
       position: absolute;
@@ -124,69 +94,86 @@ import { Router } from '@angular/router';
       left: 0;
       right: 0;
       z-index: 100;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-      padding: 1rem;
+      padding: 1.2rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .header-left {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.8rem;
     }
 
     .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
+      font-size: 1.4rem;
+      font-weight: 800;
       color: #fff;
+      letter-spacing: 0.5px;
     }
 
     .city {
-      font-size: 0.875rem;
-      color: #999;
+      font-size: 0.85rem;
+      color: #d4af37;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
+
     .separator {
-      color: #999;
+      color: #555;
     }
+
+    /* Glassmorphism style helper */
+    .glassmorphism {
+      background: rgba(18, 18, 17, 0.75) !important;
+      backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6) !important;
+    }
+
     .zoom-controls {
       position: absolute;
       bottom: 8rem;
-      right: 1rem;
+      right: 1.5rem;
       z-index: 1000;
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
+      padding: 0.5rem;
+      border-radius: 8px;
     }
 
     .zoom-btn {
-      width: 2.5rem;
-      height: 2.5rem;
+      width: 2.2rem;
+      height: 2.2rem;
       padding: 0;
-      background-color: #fff;
-      border: none;
-      border-radius: 0.25rem;
-      color: #000;
-      font-size: 1.25rem;
+      background-color: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      color: #fff;
+      font-size: 1.2rem;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background-color 0.2s;
+      transition: all 0.25s;
     }
 
     .zoom-btn:hover {
-      background-color: #f0f0f0;
+      background-color: #d4af37;
+      color: #000;
+      border-color: #d4af37;
     }
 
     .zoom-level {
       text-align: center;
-      color: #fff;
+      color: #aaa;
       font-size: 0.75rem;
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 0.25rem 0.5rem;
-      border-radius: 0.25rem;
+      font-weight: 700;
+      padding: 0.2rem 0;
     }
 
     .iheart-button {
@@ -198,33 +185,47 @@ import { Router } from '@angular/router';
     }
 
     .btn-iheart {
-      background-color: #fff;
-      color: #000;
-      padding: 1rem 2rem;
-      border: none;
-      border-radius: 2rem;
-      font-size: 1rem;
-      font-weight: 600;
+      background: rgba(18, 18, 17, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      padding: 0.9rem 2.2rem;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-      transition: background-color 0.2s;
+      gap: 0.7rem;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+      transition: all 0.3s ease;
+      letter-spacing: 1px;
     }
 
     .btn-iheart:hover {
-      background-color: #f0f0f0;
+      background-color: #d4af37;
+      color: #000;
+      border-color: #d4af37;
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
     }
-      /* Popup Modal Styles */
+
+    .btn-iheart:hover .elepha img {
+      filter: invert(1);
+    }
+
+    .elepha img {
+      width: 26px;
+      height: 26px;
+      object-fit: contain;
+      transition: all 0.3s ease;
+    }
+
+    /* Popup Modal Styles */
     .popup-overlay {
       position: fixed;
       inset: 0;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgba(0, 0, 0, 0.1);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -234,22 +235,15 @@ import { Router } from '@angular/router';
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .popup-modal {
-      background: transparent;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 12px;
-      padding: 3rem 2.5rem;
-      max-width: 600px;
+      border-radius: 16px;
+      padding: 2.5rem;
+      max-width: 550px;
       width: 90%;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
       position: relative;
       animation: slideUp 0.3s ease-out;
       pointer-events: auto;
@@ -269,15 +263,15 @@ import { Router } from '@angular/router';
     .popup-header {
       text-align: center;
       margin-bottom: 1.5rem;
-      border-bottom: 2px solid rgba(212, 175, 55, 0.3);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
       padding-bottom: 1rem;
     }
 
     .popup-title {
-      font-size: 2rem;
-      font-weight: 700;
+      font-size: 1.8rem;
+      font-weight: 800;
       color: #d4af37;
-      letter-spacing: 0.15em;
+      letter-spacing: 0.2em;
       margin: 0;
       text-transform: uppercase;
     }
@@ -287,25 +281,25 @@ import { Router } from '@angular/router';
     }
 
     .popup-heading {
-      font-size: 1.3rem;
-      font-weight: 600;
+      font-size: 1.25rem;
+      font-weight: 700;
       color: #fff;
       margin: 0 0 1rem 0;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.5px;
     }
 
     .popup-description {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: #ccc;
       line-height: 1.6;
       margin: 0 0 1.5rem 0;
-      text-align: justify;
+      text-align: center;
     }
 
     .popup-social {
       display: flex;
       justify-content: center;
-      gap: 1.5rem;
+      gap: 1.2rem;
       margin-top: 1.5rem;
     }
 
@@ -313,644 +307,327 @@ import { Router } from '@angular/router';
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 2.5rem;
-      height: 2.5rem;
-      background-color: rgba(212, 175, 55, 0.1);
-      border: 1px solid rgba(212, 175, 55, 0.3);
+      width: 2.4rem;
+      height: 2.4rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 50%;
       color: #d4af37;
       text-decoration: none;
-      font-size: 1.2rem;
-      transition: all 0.2s;
+      font-size: 1.1rem;
+      transition: all 0.25s;
       cursor: pointer;
     }
 
     .social-icon:hover {
-      background-color: rgba(212, 175, 55, 0.2);
+      background-color: rgba(212, 175, 55, 0.15);
       border-color: #d4af37;
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
     }
 
+    /* Fog Cloud Animation */
     .cloud-container {
-  position: absolute;
-  top: 2rem;
-  left: 0;
-  width: 100%;
-  height: 150px;
-  pointer-events: none;
-  z-index: 500;
-  overflow: hidden;
-}
+      position: absolute;
+      top: 4rem;
+      left: 0;
+      width: 100%;
+      height: 150px;
+      pointer-events: none;
+      z-index: 500;
+      overflow: hidden;
+    }
 
-.cloud {
-  position: absolute;
-  top: 0;
-  width: 200px;
-  height: 100px;
-  background-image: url('/assets/images/Dramatic-Fog-Cloud-Over-Mountain-Peaks-PNG.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  opacity: 0.7;
-  animation: moveCloud 50s linear infinite;
-}
+    .cloud {
+      position: absolute;
+      top: 0;
+      width: 220px;
+      height: 110px;
+      background-image: url('/assets/images/Dramatic-Fog-Cloud-Over-Mountain-Peaks-PNG.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0.45;
+      animation: moveCloud 50s linear infinite;
+    }
 
-.cloud1 {
-  left: -250px;
-  animation-duration: 30s;
-  animation-delay: 0s;
-}
+    .cloud1 {
+      left: -250px;
+      animation-duration: 35s;
+      animation-delay: 0s;
+    }
 
-.cloud2 {
-  left: -250px;
-  top: 30px;
-  animation-duration: 90s;
-  animation-delay: 7s;
-}
+    .cloud2 {
+      left: -250px;
+      top: 30px;
+      animation-duration: 80s;
+      animation-delay: 10s;
+    }
 
-.cloud3 {
-  left: -250px;
-  top: 60px;
-  animation-duration: 110s;
-  animation-delay: 14s;
-}
+    .cloud3 {
+      left: -250px;
+      top: 60px;
+      animation-duration: 100s;
+      animation-delay: 20s;
+    }
 
-@keyframes moveCloud {
-  0%   { transform: translateX(-250px); opacity: 0; }
-  10%  { opacity: 0.7; }
-  100% { transform: translateX(120vw); opacity: 0; }
-}
-  .elepha img {
-  width: 28px;     /* adjust size */
-  height: 28px;
-  object-fit: contain;
-}
-  .ongoing-project-marker {
-  background: transparent;
-}
+    @keyframes moveCloud {
+      0%   { transform: translateX(-250px); opacity: 0; }
+      10%  { opacity: 0.55; }
+      90%  { opacity: 0.55; }
+      100% { transform: translateX(120vw); opacity: 0; }
+    }
 
+    /* --- MAP RADAR MARKERS & TOOLTIPS --- */
+    ::ng-deep .upgraded-map-tooltip-card {
+      background: rgba(18, 18, 18, 0.92) !important;
+      backdrop-filter: blur(10px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      border-radius: 10px !important;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5) !important;
+      color: #fff !important;
+      padding: 0.8rem !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+      font-size: 0.8rem !important;
+      width: 180px !important;
+      white-space: normal !important;
+      z-index: 1000 !important;
+      pointer-events: none !important;
+    }
+
+    ::ng-deep .leaflet-tooltip-top:before {
+      border-top-color: rgba(18, 18, 18, 0.92) !important;
+    }
+
+    ::ng-deep .map-tooltip-card h4.tooltip-title {
+      margin: 0 0 0.3rem 0;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    ::ng-deep .map-tooltip-card span.tooltip-category {
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: inline-block;
+      margin-bottom: 0.4rem;
+    }
+
+    ::ng-deep .map-tooltip-card p.tooltip-address {
+      margin: 0 0 0.5rem 0;
+      font-size: 0.75rem;
+      color: #bbb;
+      line-height: 1.3;
+    }
+
+    ::ng-deep .map-tooltip-card .tooltip-action {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 0.4rem;
+    }
+
+    /* Pulsing main location marker hotspot */
+    ::ng-deep .pulsing-main-marker {
+      position: relative;
+      width: 46px;
+      height: 46px;
+    }
+
+    ::ng-deep .main-pulse {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 2px solid #d4af37;
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+      top: -2px;
+      left: -2px;
+    }
+
+    ::ng-deep .main-pulse.wave1 {
+      animation: main-pulse-anim 2s infinite ease-out;
+    }
+    ::ng-deep .main-pulse.wave2 {
+      animation: main-pulse-anim 2s infinite ease-out 0.8s;
+    }
+
+    @keyframes main-pulse-anim {
+      0% { transform: scale(0.6); opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { transform: scale(1.8); opacity: 0; }
+      100% { transform: scale(1.8); opacity: 0; }
+    }
+
+    /* Pulsing POI Markers */
+    ::ng-deep .poi-pulse {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: 2px solid;
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+      animation: poi-marker-pulse 2s infinite ease-out;
+      top: -2px;
+      left: -2px;
+    }
+    @keyframes poi-marker-pulse {
+      0% { transform: scale(0.6); opacity: 0; }
+      20% { opacity: 0.8; }
+      80% { transform: scale(2.0); opacity: 0; }
+      100% { transform: scale(2.0); opacity: 0; }
+    }
+
+    /* Custom Leaflet popup formatting in global view */
+    ::ng-deep .custom-leaflet-popup .leaflet-popup-content-wrapper {
+      background: rgba(18, 18, 18, 0.85) !important;
+      backdrop-filter: blur(12px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      border-radius: 12px !important;
+      color: #fff !important;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5) !important;
+    }
+    ::ng-deep .custom-leaflet-popup .leaflet-popup-tip {
+      background: rgba(18, 18, 18, 0.85) !important;
+      border-left: 1px solid rgba(255, 255, 255, 0.15) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+    }
+    ::ng-deep .map-popup-card {
+      padding: 0.3rem;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-width: 180px;
+    }
+    ::ng-deep .map-popup-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #d4af37;
+      margin-bottom: 0.25rem;
+      line-height: 1.3;
+    }
+    ::ng-deep .map-popup-category {
+      font-size: 0.7rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+    ::ng-deep .map-popup-address {
+      font-size: 0.75rem;
+      color: #ccc;
+      margin-bottom: 0.6rem;
+    }
+    ::ng-deep .map-popup-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      margin-bottom: 0.6rem;
+    }
+    ::ng-deep .map-popup-metrics {
+      display: flex;
+      gap: 1rem;
+    }
+    ::ng-deep .metric-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    @media (max-width: 768px) {
+      .popup-modal {
+        padding: 1.8rem;
+      }
+      .popup-title {
+        font-size: 1.5rem;
+      }
+      .header {
+        padding: 1rem;
+      }
+      .logo {
+        font-size: 1.1rem;
+      }
+    }
   `]
 })
-  //  .cloud-layer {
-  //     position: absolute;
-  //     left: -200%;
-  //     width: 300%;
-  //     height: 150px;
-  //     background-image: url('/assets/images/Dramatic-Fog-Cloud-Over-Mountain-Peaks-PNG.png');
-  //     background-repeat: repeat-x;
-  //     background-size: contain;
-  //     pointer-events: none;
-  //     z-index: 500;
-  //   }
-
-  //   .cloud-top {
-  //     top: 2rem;
-  //     opacity: 0.6;
-  //     animation: moveCloudsTop 120s linear infinite;
-  //   }
-
-  //   @keyframes moveCloudsTop {
-  //     0% { transform: translateX(0); }
-  //     100% { transform: translateX(100%); }
-  //   }
 export class HomeComponent implements OnInit {
   mainLocation = MAIN_LOCATION;
-    nearbyLocations = NEARBY_LOCATIONS;
+  nearbyLocations = NEARBY_LOCATIONS;
   zoomLevel = 10;
-  // map!: L.Map;
-    map: any;
+  map: any;
   mainMarker: any;
-  locationLabelMarker: any;
-  polyline: any;
- iheartMarker: any;
-  nearbyMarkers: any[] = [];
-  // showPopup = true;
-   private isBrowser: boolean;
-ongoingProjects = ONGOINGPROJECT_LOCATIONS;
-ongoingProjectMarkers: any[] = [];
+  ongoingProjects = ONGOINGPROJECT_LOCATIONS;
+  ongoingProjectMarkers: any[] = [];
+  private isBrowser: boolean;
 
-// constructor(private router: Router) {}
-  constructor(@Inject(PLATFORM_ID) private platformId: Object,private router: Router) {
-    this.isBrowser = isPlatformBrowser(this.platformId);
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private router: Router,
+    private googleMapsService: GoogleMapsService
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
   }
 
-    ngOnInit(): void {}
+  ngOnInit(): void {}
 
-   async onMapReady(map: any): Promise<void> {
+  async onMapReady(map: any): Promise<void> {
     if (!this.isBrowser) return;
 
     this.map = map;
-      // await this.addNearbyLocationMarkers();
+    this.googleMapsService.setMap(map);
+
     await this.addMainLocationMarker();
     await this.addOngoingProjectMarkers();  
-    // await this.addIHeartMarker();
-    // await this.addLocationLabelButton();
-    // await this.drawDottedLine();
-
   }
-  
-  // closePopup(): void {
-  //   this.showPopup = false;
-  // }
 
-  ///3.
-
-    private async addMainLocationMarker(): Promise<void> {
+  private async addMainLocationMarker(): Promise<void> {
     if (!this.map) return;
+    this.mainMarker = await this.googleMapsService.createMainLocationMarker(
+      this.mainLocation.latitude,
+      this.mainLocation.longitude,
+      this.mainLocation.name,
+      this.mainLocation.icon
+    );
 
-    const L = await import('leaflet');
-
-    // Create location pin icon
-    const locationPinSvg = `
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="40" height="40">
-        <defs>
-          <style>
-            .pin-fill { fill: #ff005e; }
-            .pin-stroke { stroke: #fff; stroke-width: 1; }
-          </style>
-        </defs>
-        <path class="pin-fill pin-stroke" d="M12 2C6.48 2 2 6.48 2 12c0 7 10 13 10 13s10-6 10-13c0-5.52-4.48-10-10-10zm0 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
-      </svg>
-    `;
-
-    const marker = L.marker([this.mainLocation.latitude, this.mainLocation.longitude], {
-      icon: L.divIcon({
-        className: 'location-pin-marker',
-        html: locationPinSvg,
-        iconSize: [40, 40],
-        iconAnchor: [20, 40],
-        popupAnchor: [0, -40]
-      })
-    }).addTo(this.map);
-
-    marker.bindPopup(`
-      <div style="padding: 0.75rem; font-family: Arial, sans-serif;">
-        <strong style="font-size: 1rem; color: #ff005e;">${this.mainLocation.name}</strong>
-        <br/>
-        <span style="font-size: 0.85rem; color: #666;">${this.mainLocation.address}</span>
+    this.mainMarker.bindPopup(`
+      <div class="map-popup-card">
+        <div class="map-popup-title">${this.mainLocation.name}</div>
+        <div class="map-popup-address">${this.mainLocation.address}</div>
       </div>
     `);
-
-    this.mainMarker = marker;
   }
 
   private async addOngoingProjectMarkers(): Promise<void> {
-  if (!this.map) return;
+    if (!this.map) return;
 
-  const L = await import('leaflet');
+    this.ongoingProjects.forEach(async project => {
+      const color = '#00b3ff';
+      const marker = await this.googleMapsService.createMarker(
+        { lat: project.latitude, lng: project.longitude },
+        project.name,
+        color,
+        project.icon ?? '📍',
+        'Ongoing Project',
+        project.address
+      );
 
-  this.ongoingProjects.forEach(project => {
-
-    // Custom project icon
-    const projectIcon = L.divIcon({
-      className: 'ongoing-project-marker',
-      html: `
-        <div style="
-          width:34px;
-          height:34px;
-          background:#00b3ff;
-          border:3px solid #fff;
-          border-radius:50%;
-          box-shadow:0 0 10px rgba(0,0,0,0.4);
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          font-size:14px;
-          color:white;
-          font-weight:bold;
-          iconUrl: 'assets/images/location-pin.png',
-        ">
-          P
+      marker.bindPopup(`
+        <div class="map-popup-card">
+          <div class="map-popup-title" style="color: #00b3ff;">${project.name}</div>
+          <div class="map-popup-category" style="color: #aaa;">Ongoing Project</div>
+          <div class="map-popup-address">${project.address}</div>
         </div>
-      `,
-      iconSize: [38,38],
-      iconAnchor: [19,38],
-      popupAnchor: [0, -38]
+      `);
+
+      this.ongoingProjectMarkers.push(marker);
     });
-
-    // Add marker
-    const marker = L.marker(
-      [project.latitude, project.longitude],
-      { icon: projectIcon }
-    ).addTo(this.map);
-
-    // Popup
-    marker.bindPopup(`
-      <div style="padding:6px;font-family:Arial;">
-        <strong style="color:#00b3ff;">${project.name}</strong><br/>
-        <span style="font-size:12px;">Ongoing Project</span>
-      </div>
-    `);
-
-    this.ongoingProjectMarkers.push(marker);
-  });
-}
-
-  // private async addLocationLabelButton(): Promise<void> {
-  //   if (!this.map) return;
-
-  //   const L = await import('leaflet');
-
-  //   // Create a small button with location name positioned offset from the main location
-  //   const labelButtonHtml = `
-  //     <div id="locationLabelBtn" style="
-  //       background-color: #fff;
-  //       padding: 0.5rem 1rem;
-  //       border-radius: 1.5rem;
-  //       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  //       font-size: 0.8rem;
-  //       font-weight: 600;
-  //       color: #000;
-  //       white-space: nowrap;
-  //       border: 1px solid #e0e0e0;
-  //       cursor: pointer;
-  //       transition: all 0.2s ease;
-  //       width:135px;
-  //     ">
-  //       ${this.mainLocation.name}
-  //     </div>
-  //   `;
-
-  //   // Position the button offset from the main location
-  //   const offsetLat = this.mainLocation.latitude + 0.008;
-  //   const offsetLng = this.mainLocation.longitude + 0.008;
-
-  //   const labelMarker = L.marker([offsetLat, offsetLng], {
-  //     icon: L.divIcon({
-  //       className: 'location-label-marker',
-  //       html: labelButtonHtml,
-  //       iconSize: [150, 35],
-  //       iconAnchor: [75, 17],
-  //       popupAnchor: [0, -17]
-  //     })
-  //   }).addTo(this.map);
-
-  //   this.locationLabelMarker = labelMarker;
-  //    setTimeout(() => {
-  //   const btn = document.getElementById('locationLabelBtn');
-  //   if (btn) {
-  //     btn.addEventListener('click', () => {
-  //       this.navigateToLocation();
-  //     });
-  //   }
-  // }, 0);
-  // }
-  //   private async drawDottedLine(): Promise<void> {
-  //   if (!this.map || !this.mainMarker || !this.locationLabelMarker) return;
-
-  //   const L = await import('leaflet');
-
-  //   // Create a dotted line from main marker to label button
-  //   const mainLatLng = this.mainMarker.getLatLng();
-  //   const labelLatLng = this.locationLabelMarker.getLatLng();
-
-  //   this.polyline = L.polyline([mainLatLng, labelLatLng], {
-  //     color: '#d4af37',
-  //     weight: 2,
-  //     dashArray: '6, 4',
-  //     opacity: 0.8,
-  //     lineCap: 'round',
-  //     lineJoin: 'round'
-  //   }).addTo(this.map);
-  // }
-
-
-//2.
-  //   private async addMainLocationMarker(): Promise<void> {
-  //   if (!this.map) return;
-
-  //   const L = await import('leaflet');
-
-  //   // Create main location marker with white circle and red dot
-  //   const mainIconHtml = `
-  //     <div style="
-  //       width: 32px;
-  //       height: 32px;
-  //       background-color: #fff;
-  //       border: 3px solid #ff005e;
-  //       border-radius: 50%;
-  //       display: flex;
-  //       align-items: center;
-  //       justify-content: center;
-  //       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  //       position: relative;
-  //     ">
-  //       <div style="
-  //         width: 12px;
-  //         height: 12px;
-  //         background-color: #ff005e;
-  //         border-radius: 50%;
-  //       "></div>
-  //     </div>
-  //   `;
-
-  //   const marker = L.marker([this.mainLocation.latitude, this.mainLocation.longitude], {
-  //     icon: L.divIcon({
-  //       className: 'main-location-marker',
-  //       html: mainIconHtml,
-  //       iconSize: [32, 32],
-  //       iconAnchor: [16, 16],
-  //       popupAnchor: [0, -16]
-  //     })
-  //   }).addTo(this.map);
-
-  //   marker.bindPopup(`
-  //     <div style="padding: 0.75rem; font-family: Arial, sans-serif;">
-  //       <strong style="font-size: 1rem; color: #ff005e;">${this.mainLocation.name}</strong>
-  //       <br/>
-  //       <span style="font-size: 0.85rem; color: #666;">${this.mainLocation.address}</span>
-  //     </div>
-  //   `);
-
-  //   this.mainMarker = marker;
-  // }
-
-  // private async addIHeartMarker(): Promise<void> {
-  //   if (!this.map) return;
-
-  //   const L = await import('leaflet');
-
-  //   // Create iHEART marker with heart icon and label
-  //   const iheartIconHtml = `
-  //     <div style="
-  //       background-color: #fff;
-  //       padding: 0.75rem 1.25rem;
-  //       border-radius: 0.5rem;
-  //       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  //       display: flex;
-  //       align-items: center;
-  //       gap: 0.5rem;
-  //       font-weight: 600;
-  //       font-size: 0.9rem;
-  //       color: #000;
-  //       white-space: nowrap;
-  //       width:150px;
-  //     ">
-  //       <span>Elephantine Enormous</span>
-  //     </div>
-  //   `;
-
-  //   const iheartMarker = L.marker([this.mainLocation.latitude, this.mainLocation.longitude], {
-  //     icon: L.divIcon({
-  //       className: 'iheart-marker',
-  //       html: iheartIconHtml,
-  //       iconSize: [130, 45],
-  //       iconAnchor: [65, 22],
-  //       popupAnchor: [0, -22]
-  //     })
-  //   }).addTo(this.map);
-
-  //   this.iheartMarker = iheartMarker;
-  // }
-
-  // private async addNearbyLocationMarkers(): Promise<void> {
-  //   if (!this.map) return;
-
-  //   const L = await import('leaflet');
-
-  //   // Color mapping for different categories
-  //   const categoryColors: { [key: string]: string } = {
-  //     'Health': '#ff6b6b',
-  //     'Education': '#ffd93d',
-  //     'Entertainment': '#a78bfa',
-  //     'Landmarks': '#4ecdc4'
-  //   };
-
-  //   this.nearbyLocations.forEach((location, index) => {
-  //     const category = location.category || 'default';
-  //     const color = categoryColors[category] || '#999';
-
-  //     const markerIconHtml = `
-  //       <div style="
-  //         width: 24px;
-  //         height: 24px;
-  //         background-color: ${color};
-  //         border: 2px solid #fff;
-  //         border-radius: 50%;
-  //         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  //       "></div>
-  //     `;
-
-  //     const marker = L.marker([location.latitude, location.longitude], {
-  //       icon: L.divIcon({
-  //         className: 'nearby-location-marker',
-  //         html: markerIconHtml,
-  //         iconSize: [24, 24],
-  //         iconAnchor: [12, 12],
-  //         popupAnchor: [0, -12]
-  //       })
-  //     }).addTo(this.map);
-
-  //     marker.bindPopup(`
-  //       <div style="padding: 0.5rem; font-family: Arial, sans-serif;">
-  //         <strong style="color: ${color};">${location.name}</strong>
-  //         <br/>
-  //         <span style="font-size: 0.8rem; color: #666;">${location.category}</span>
-  //       </div>
-  //     `);
-
-  //     this.nearbyMarkers.push(marker);
-  //   });
-  // }
-
-  // private async drawDottedLine(): Promise<void> {
-  //   if (!this.map || !this.mainMarker || !this.iheartMarker) return;
-
-  //   const L = await import('leaflet');
-
-  //   // Create a dotted line from main marker to iHEART marker
-  //   const mainLatLng = this.mainMarker.getLatLng();
-  //   const iheartLatLng = this.iheartMarker.getLatLng();
-
-  //   // Offset the iHEART position slightly for visual effect
-  //   const offsetLatLng = L.latLng(
-  //     mainLatLng.lat + 0.006,
-  //     mainLatLng.lng + 0.006
-  //   );
-
-  //   this.polyline = L.polyline([mainLatLng, offsetLatLng], {
-  //     color: '#f2f0e8',
-  //     weight: 2,
-  //     dashArray: '6, 4',
-  //     opacity: 0.9,
-  //     lineCap: 'round',
-  //     lineJoin: 'round'
-  //   }).addTo(this.map);
-  // }
-
-
-  //1.
-  // private async drawDottedLine(): Promise<void> {
-  //   if (!this.map) return;
-
-  //   const L = await import('leaflet');
-
-  //   // Create a dotted line from main location to a point slightly offset
-  //   const mainLatLng = L.latLng(this.mainLocation.latitude, this.mainLocation.longitude);
-  //   const offsetLatLng = L.latLng(
-  //     this.mainLocation.latitude + 0.008,
-  //     this.mainLocation.longitude + 0.008
-  //   );
-
-  //   // Draw the dotted line
-  //   this.polyline = L.polyline([mainLatLng, offsetLatLng], {
-  //     color: '#ff005e',
-  //     weight: 3,
-  //     dashArray: '8, 5',
-  //     opacity: 0.9,
-  //     lineCap: 'round',
-  //     lineJoin: 'round'
-  //   }).addTo(this.map);
-  // }
-
-  //  private async addMainLocationMarker(): Promise<void> {
-  //   if (!this.map) return;
-
-  //   const L = await import('leaflet');
-
-  //   // Create SVG location icon
-  //   const locationIconSvg = `
-  //     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ff005e" width="40" height="40">
-  //       <path d="M12 2C6.48 2 2 6.48 2 12c0 7 10 13 10 13s10-6 10-13c0-5.52-4.48-10-10-10zm0 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/>
-  //     </svg>
-  //   `;
-
-  //   const marker = L.marker([this.mainLocation.latitude, this.mainLocation.longitude], {
-  //     icon: L.divIcon({
-  //       className: 'location-marker',
-  //       html: locationIconSvg,
-  //       iconSize: [40, 40],
-  //       iconAnchor: [20, 40],
-  //       popupAnchor: [0, -40]
-  //     })
-  //   }).addTo(this.map);
-
-  //   marker.bindPopup(`
-  //     <div style="padding: 0.75rem; font-family: Arial, sans-serif;">
-  //       <strong style="font-size: 1rem; color: #ff005e;">${this.mainLocation.name}</strong>
-  //       <br/>
-  //       <span style="font-size: 0.85rem; color: #666;">${this.mainLocation.address}</span>
-  //     </div>
-  //   `);
-
-  //   this.mainMarker = marker;
-  // }
-  
-  // private async addButtonMarker(): Promise<void> {
-  //   if (!this.map) return;
-
-  //   const L = await import('leaflet');
-
-  //   // Create a custom button marker at the main location
-  //   const buttonMarker = L.marker([this.mainLocation.latitude, this.mainLocation.longitude], {
-  //     icon: L.divIcon({
-  //       className: 'button-marker',
-  //       html: `
-  //         <div style="
-  //           background-color: #fff;
-  //           color: #000;
-  //           padding: 0.75rem 1.5rem;
-  //           border: none;
-  //           border-radius: 2rem;
-  //           font-size: 0.875rem;
-  //           font-weight: 600;
-  //           cursor: pointer;
-  //           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  //           white-space: nowrap;
-  //           display: flex;
-  //           align-items: center;
-  //           justify-content: center;
-  //           transition: all 0.2s ease;
-  //         ">
-  //           Explore
-  //         </div>
-  //       `,
-  //       iconSize: [120, 40],
-  //       iconAnchor: [60, 20],
-  //       popupAnchor: [0, -20]
-  //     })
-  //   }).addTo(this.map);
-
-  //   this.buttonMarker = buttonMarker;
-  // }
-
-  // private async addMainLocationMarker(): Promise<void> {
-  //   if (!this.map) return;
-  //   const L = await import('leaflet');
-
-  //   const marker = L.marker([this.mainLocation.latitude, this.mainLocation.longitude], {
-  //     icon: L.divIcon({
-  //       className: 'main-icon',
-  //       html: `
-  //         <div style="
-  //           width: 26px;
-  //           height: 26px;
-  //           background:#ff005e;
-  //           border:3px solid white;
-  //           border-radius:50%;
-  //           box-shadow:0 0 8px rgba(0,0,0,.5);
-  //         "></div>
-  //       `,
-  //       iconSize: [26, 26],
-  //       iconAnchor: [13, 13]
-  //     })
-  //   }).addTo(this.map);
-
-  //   marker.bindPopup(`<div style="padding:0.5rem;"><strong>${this.mainLocation.name}</strong><br/>${this.mainLocation.address}</div>`);
-  //   this.mainMarker = marker;
-  // }
-
-  // private async addButtonMarker(): Promise<void> {
-  //   if (!this.map) return;
-
-  //   const L = await import('leaflet');
-  //   // Create a custom button marker at the main location
-  //   const buttonMarker = L.marker([this.mainLocation.latitude, this.mainLocation.longitude], {
-  //     icon: L.divIcon({
-  //       className: 'button-marker',
-  //       html: `
-  //         <div style="
-  //           background-color: #fff;
-  //           color: #000;
-  //           padding: 0.75rem 1.5rem;
-  //           border: none;
-  //           border-radius: 2rem;
-  //           font-size: 0.875rem;
-  //           font-weight: 600;
-  //           cursor: pointer;
-  //           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  //           white-space: nowrap;
-  //           display: flex;
-  //           align-items: center;
-  //           justify-content: center;
-  //         ">
-  //           Explore
-  //         </div>
-  //       `,
-  //       iconSize: [120, 40],
-  //       iconAnchor: [60, 20],
-  //       popupAnchor: [0, -20]
-  //     })
-  //   }).addTo(this.map);
-
-  //   this.buttonMarker = buttonMarker;
-  // }
-
-  // private async drawDottedLine(): Promise<void> {
-  //   if (!this.map || !this.mainMarker || !this.buttonMarker) return;
-
-  //    const L = await import('leaflet');
-  //   // Create a dotted line from main marker to button marker
-  //   // Since they're at the same location, we'll create a line from the marker to a point slightly offset
-  //   const mainLatLng = this.mainMarker.getLatLng();
-  //   const offsetLatLng = L.latLng(mainLatLng.lat + 0.005, mainLatLng.lng + 0.005);
-
-  //   this.polyline = L.polyline([mainLatLng, offsetLatLng], {
-  //     color: '#d41958',
-  //     weight: 2,
-  //     dashArray: '5, 5',
-  //     opacity: 0.7
-  //   }).addTo(this.map);
-  // }
+  }
 
   zoomIn(): void {
     if (this.zoomLevel < 20) {
@@ -967,7 +644,6 @@ ongoingProjectMarkers: any[] = [];
   }
 
   navigateToLocation(): void {
-    // this.showPopup = true;
     this.router.navigate(['/location']);
   }
 }

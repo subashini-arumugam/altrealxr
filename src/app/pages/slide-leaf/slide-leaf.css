@@ -106,7 +106,8 @@
     }
 
     .popup-modal {
-      background: transparent;
+      background: rgba(18, 18, 17, 0.75);
+      backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 12px;
       padding: 3rem 2.5rem;

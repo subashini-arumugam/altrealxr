@@ -1,275 +1,6 @@
-// import { Component, OnInit, OnDestroy,AfterViewInit } from '@angular/core';
-// import { CommonModule } from '@angular/common';
-// import { ActivatedRoute, Router } from '@angular/router';
-// import { Viewer } from 'photo-sphere-viewer';
-// import { HostListener } from '@angular/core';
-
-
-// import { AMENITIES } from '../constants/data';
-// import { Amenity } from '../models';
-
-// @Component({
-//   selector: 'app-amenity-viewer',
-//   standalone: true,
-//   imports: [CommonModule],
-//   template: `
-//     <div class="container">
-
-//       <!-- Header -->
-//       <div class="header">
-//         <button class="back-btn" (click)="goBack()">←</button>
-//         <span class="title">360 View</span>
-//       </div>
-
-//       <!-- 360 Viewer -->
-//       <div id="psvContainer" class="viewer"></div>
-
-//       <!-- Bottom Info -->
-//       <div class="info" *ngIf="amenity">
-//         <div>
-//           <h2>{{ amenity.icon }} {{ amenity.name }}</h2>
-//           <p>{{ amenity.description }}</p>
-//         </div>
-
-//         <div class="nav">
-//           <button (click)="previousAmenity()" [disabled]="currentIndex === 0">
-//             ← Previous
-//           </button>
-//           <button (click)="nextAmenity()" [disabled]="currentIndex === amenities.length - 1">
-//             Next →
-//           </button>
-//         </div>
-//       </div>
-
-//     </div>
-//   `,
-//   styles: [`
-//   .container {
-//   width: 100vw;
-//   height: 100vh;
-//   margin: 0;
-//   padding: 0;
-//   position: relative;
-//   overflow: hidden;
-//   background: #000;
-// }
-
-
-//     .header {
-//       position: absolute;
-//       top: 0;
-//       left: 0;
-//       right: 0;
-//       height: 60px;
-//       z-index: 10;
-//       display: flex;
-//       align-items: center;
-//       padding: 1rem;
-//       color: #fff;
-//       background: rgba(0,0,0,0.4);  
-//     }
-
-//     .back-btn {
-//       background: none;
-//       border: none;
-//       color: #fff;
-//       font-size: 1.5rem;
-//       cursor: pointer;
-//       margin-right: 1rem;
-//     }
-
-//  .viewer {
-//       position: absolute;
-//       top: 60px;      /* same as header height */
-//       bottom: 120px;  /* same as info height */
-//       left: 0;
-//       right: 0;
-//     }
-
-//     .info {
-//       position: absolute;
-//       bottom: 0;
-//       left: 0;
-//       right: 0;
-//       height: 120px;
-//       z-index: 10;
-//       background: rgba(0,0,0,0.75);
-//       color: #fff;
-//       padding: 1rem;
-//       display: flex;
-//       justify-content: space-between;
-//       align-items: center;
-//     }
-
-//     .nav button {
-//       background: #ec4899;
-//       border: none;
-//       color: #fff;
-//       padding: 0.5rem 1rem;
-//       cursor: pointer;
-//       border-radius: 4px;
-//       margin-left: 0.5rem;
-//     }
-
-//     .nav button:disabled {
-//       opacity: 0.5;
-//       cursor: not-allowed;
-//     }
-//   `]
-
-//   //    .viewer {
-// //   position: absolute; /* not fixed */
-// //   top: 0;
-// //   left: 0;
-// //   right: 0;
-// //   bottom: 0;
-// //   z-index: 1;
-// // }
-// })
-// export class AmenityViewerComponent implements OnInit, OnDestroy,AfterViewInit {
-
-//   amenities = AMENITIES;
-//   amenity!: Amenity;
-//   currentIndex = 0;
-//   viewer!: Viewer;
-
-//   isViewerReady = false;
-//   constructor(
-//     private route: ActivatedRoute,
-//     private router: Router
-//   ) {}
-
-//   ngOnInit(): void {
-//     this.route.params.subscribe(params => {
-//       const id = params['amenityId'];
-//       const found = this.amenities.find(a => a.id === id);
-
-//      if (!found) return;
-
-//       this.amenity = found;
-//       this.currentIndex = this.amenities.indexOf(found);
-//  if (this.isViewerReady) {
-//         this.changePanorama();
-//       }
-//     //    if (!this.isViewerReady) {
-//     //   setTimeout(() => this.initViewer(), 0);
-//     // } else {
-//     //   this.changePanorama();
-//     // }
-//     });
-//   }
-//   ngAfterViewInit(): void {
-//   setTimeout(() => {
-//     this.initViewer();
-//   }, 100); // small delay ensures full DOM layout
-// }
-
-// initViewer(): void {
-//   const container = document.getElementById('psvContainer')!;
-
-//   this.viewer = new Viewer({
-//     container,
-//     panorama: this.amenity.image360,
-//     defaultLong: 0,
-//     defaultLat: 0,
-//     mousewheel: true,
-//     navbar: []   // hide navbar correctly
-//   });
-
-//   this.isViewerReady = true;
-//   setTimeout(() => this.resizeViewer(), 50);
-// }
-
-
-
-// // initViewer(): void {
-// //   this.viewer = new Viewer({
-// //     container: document.getElementById('psvContainer')!,
-// //     panorama: this.amenity.image360,
-// //     defaultLong: 0,
-// //     defaultLat: 0,
-// //     mousewheel: true,
-// //     navbar: [] // ✅ correct way to hide navbar
-// //   });
-
-// //   this.isViewerReady = true;
-// //    setTimeout(() => this.resizeViewer(), 0);
-// // }
-
-// // @HostListener('window:resize')
-// // onResize() {
-// //   const container = document.getElementById('psvContainer');
-// //   if (container && this.viewer) {
-// //     this.viewer.resize({
-// //       width: container.clientWidth,
-// //       height: container.clientHeight
-// //     });
-// //   }
-// // }
-//   changePanorama(): void {
-//     if (this.viewer) {
-//       this.viewer.setPanorama(this.amenity.image360, {
-//         longitude: 0,
-//         latitude: 0,
-//         zoom: 0
-//       });
-//       setTimeout(() => this.resizeViewer(), 50);
-//     }
-//   }
-//   resizeViewer(): void {
-//   const container = document.getElementById('psvContainer');
-//   if (container && this.viewer) {
-//     this.viewer.resize({
-//       width: container.offsetWidth + 'px',
-//       height: container.offsetHeight + 'px'
-//     });
-//   }
-// }
-//   @HostListener('window:resize')
-//   onResize() {
-//     this.resizeViewer();
-//   }
-//   previousAmenity(): void {
-//     if (this.currentIndex > 0) {
-//       this.router.navigate(['/amenity', this.amenities[this.currentIndex - 1].id]);
-//     }
-//   }
-
-//   nextAmenity(): void {
-//     if (this.currentIndex < this.amenities.length - 1) {
-//       this.router.navigate(['/amenity', this.amenities[this.currentIndex + 1].id]);
-//     }
-//   }
-
-//   goBack(): void {
-//     this.router.navigate(['/']);
-//   }
-
-//   ngOnDestroy(): void {
-//     if (this.viewer) {
-//       this.viewer.destroy();
-//     }
-//   }
-
-
-// //  resizeViewer(): void {
-// //   const container = document.getElementById('psvContainer');
-// //   if (container && this.viewer) {
-// //     this.viewer.resize({
-// //       width: container.clientWidth + 'px',
-// //       height: container.clientHeight + 'px'
-// //     });
-// //   }
-// // }
-
-
-// }
-
-
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, OnDestroy, AfterViewInit, HostListener, Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { AMENITIES } from '../constants/data';
 import { Amenity } from '../models';
 
@@ -279,44 +10,47 @@ import { Amenity } from '../models';
   imports: [CommonModule],
   template: `
     <div class="container">
-
       <!-- Header -->
       <div class="header">
-        <button class="back-btn" (click)="goBack()">←</button>
-        <span class="title">View</span>
+        <button class="back-btn" (click)="goBack()">← Back to Building</button>
+        <span class="title" *ngIf="amenity">{{ amenity.name }} - 360° View</span>
       </div>
 
-      <!-- Image Viewer -->
-      <div class="image-viewer">
-        <img *ngIf="amenity" [src]="amenity.image360" alt="Amenity Image">
+      <!-- 360 Viewer Container -->
+      <div id="psvContainer" class="viewer-container">
+        <!-- Fallback if viewer is loading or not browser -->
+        <div *ngIf="!isViewerReady" class="loading-fallback">
+          <div class="spinner"></div>
+          <p>Loading 360° Panorama...</p>
+        </div>
       </div>
 
-      <!-- Bottom Info -->
-      <div class="info" *ngIf="amenity">
-        <div>
+      <!-- Bottom Info Panel -->
+      <div class="info-panel" *ngIf="amenity">
+        <div class="info-text">
           <h2>{{ amenity.icon }} {{ amenity.name }}</h2>
           <p>{{ amenity.description }}</p>
         </div>
 
-        <div class="nav">
-          <button (click)="previousAmenity()" [disabled]="currentIndex === 0">
+        <div class="nav-controls">
+          <button class="nav-btn" (click)="previousAmenity()" [disabled]="currentIndex === 0">
             ← Previous
           </button>
-          <button (click)="nextAmenity()" [disabled]="currentIndex === amenities.length - 1">
+          <button class="nav-btn" (click)="nextAmenity()" [disabled]="currentIndex === amenities.length - 1">
             Next →
           </button>
         </div>
       </div>
-
     </div>
   `,
   styles: [`
     .container {
       width: 100vw;
       height: 100vh;
-      background: #000;
+      background: #0d0d0c;
       position: relative;
       overflow: hidden;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     }
 
     .header {
@@ -324,82 +58,180 @@ import { Amenity } from '../models';
       top: 0;
       left: 0;
       right: 0;
-      height: 60px;
+      height: 70px;
       z-index: 10;
       display: flex;
       align-items: center;
-      padding: 1rem;
+      padding: 0 2rem;
       color: #fff;
-      background: rgba(0,0,0,0.4);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.85), rgba(0,0,0,0));
     }
 
     .back-btn {
-      background: none;
-      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       color: #fff;
-      font-size: 1.5rem;
+      font-size: 0.9rem;
+      padding: 0.5rem 1.2rem;
+      border-radius: 30px;
       cursor: pointer;
-      margin-right: 1rem;
+      margin-right: 1.5rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
     }
 
-    .image-viewer {
+    .back-btn:hover {
+      background: #d4af37;
+      border-color: #d4af37;
+      color: #000;
+      transform: translateX(-3px);
+    }
+
+    .title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #f3f3f3;
+    }
+
+    .viewer-container {
       position: absolute;
-      top: 60px;
-      bottom: 120px;
-      left: 0;
-      right: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #000;
-    }
-
-    .image-viewer img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;   /* ✅ full image always visible */
-    }
-
-    .info {
-      position: absolute;
+      top: 0;
       bottom: 0;
       left: 0;
       right: 0;
-      height: 120px;
-      background: rgba(0,0,0,0.75);
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+    }
+
+    .loading-fallback {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #111;
       color: #fff;
-      padding: 1rem;
+      z-index: 5;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      border-top-color: #d4af37;
+      animation: spin 1s ease-in-out infinite;
+      margin-bottom: 1rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .info-panel {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 800px;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      color: #fff;
+      padding: 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 2rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    .nav button {
-      background: #ec4899;
-      border: none;
+    .info-text {
+      flex: 1;
+    }
+
+    .info-text h2 {
+      font-size: 1.4rem;
+      margin: 0 0 0.5rem 0;
+      color: #d4af37;
+      letter-spacing: 0.5px;
+    }
+
+    .info-text p {
+      font-size: 0.9rem;
+      color: #ccc;
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .nav-controls {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .nav-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       color: #fff;
-      padding: 0.5rem 1rem;
+      padding: 0.6rem 1.2rem;
       cursor: pointer;
-      border-radius: 4px;
-      margin-left: 0.5rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      white-space: nowrap;
     }
 
-    .nav button:disabled {
-      opacity: 0.5;
+    .nav-btn:hover:not(:disabled) {
+      background: rgba(212, 175, 55, 0.2);
+      border-color: #d4af37;
+      color: #d4af37;
+      transform: translateY(-2px);
+    }
+
+    .nav-btn:disabled {
+      opacity: 0.3;
       cursor: not-allowed;
+    }
+
+    @media (max-width: 768px) {
+      .info-panel {
+        flex-direction: column;
+        align-items: stretch;
+        bottom: 1rem;
+        padding: 1.2rem;
+        gap: 1.2rem;
+      }
+      .nav-controls {
+        justify-content: space-between;
+      }
+      .header {
+        padding: 0 1rem;
+      }
     }
   `]
 })
-export class AmenityViewerComponent implements OnInit {
-
+export class AmenityViewerComponent implements OnInit, OnDestroy, AfterViewInit {
   amenities = AMENITIES;
   amenity!: Amenity;
   currentIndex = 0;
+  viewer: any;
+  isViewerReady = false;
+  isBrowser: boolean;
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -409,7 +241,67 @@ export class AmenityViewerComponent implements OnInit {
 
       this.amenity = found;
       this.currentIndex = this.amenities.indexOf(found);
+      if (this.isViewerReady) {
+        this.changePanorama();
+      }
     });
+  }
+
+  ngAfterViewInit(): void {
+    if (this.isBrowser) {
+      setTimeout(() => {
+        this.initViewer();
+      }, 150);
+    }
+  }
+
+  async initViewer(): Promise<void> {
+    const container = document.getElementById('psvContainer');
+    if (!container) return;
+
+    try {
+      const { Viewer } = await import('photo-sphere-viewer');
+      this.viewer = new Viewer({
+        container: container,
+        panorama: this.amenity.image360,
+        defaultLong: 0,
+        defaultLat: 0,
+        mousewheel: true,
+        navbar: [
+          'autorotate',
+          'zoom',
+          'fullscreen'
+        ]
+      });
+
+      this.isViewerReady = true;
+      setTimeout(() => this.resizeViewer(), 100);
+    } catch (e) {
+      console.error('Failed to load Photo Sphere Viewer:', e);
+    }
+  }
+
+  changePanorama(): void {
+    if (this.viewer) {
+      this.viewer.setPanorama(this.amenity.image360, {
+        longitude: 0,
+        latitude: 0,
+        zoom: 0
+      }).then(() => {
+        this.resizeViewer();
+      });
+    }
+  }
+
+  resizeViewer(): void {
+    if (this.viewer) {
+      this.viewer.resize();
+    }
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.resizeViewer();
   }
 
   previousAmenity(): void {
@@ -425,8 +317,12 @@ export class AmenityViewerComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['/']);
+    this.router.navigate(['/building']);
+  }
+
+  ngOnDestroy(): void {
+    if (this.viewer) {
+      this.viewer.destroy();
+    }
   }
 }
-
-
